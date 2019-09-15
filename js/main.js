@@ -101,8 +101,8 @@ var placemarks = [
         iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
     },
     {
-        latitude: 53.303781,
-        longitude: 34.306949,
+        latitude: 53.301997,
+        longitude: 34.305915,
         hintContent: 'Кафе, бар, паб',
         balloonContent: [
             '<h3 class="center">Чили</h3>' +
@@ -170,8 +170,8 @@ var placemarks = [
         iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
     },
     {
-        latitude: 53.301997,
-        longitude: 34.305915,
+        latitude: 53.305076,
+        longitude: 34.303061,
         hintContent: 'Суши-бар, пиццерия',
         balloonContent: [
             '<h3 class="center">Автосуши</h3>' +
