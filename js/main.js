@@ -35,7 +35,7 @@ var placemarks = [
     {
         latitude: 53.306647,
         longitude: 34.305244,
-        hintContent: 'Оливье',
+        hintContent: 'Ресторан',
         balloonContent: [
             '<h3 class="center">Оливье</h3>' +
             '<div>Время работы</div>' +
@@ -74,6 +74,29 @@ var placemarks = [
         ],
         iconLayout: 'default#image', // тип макета
         iconImageHref: 'img/icon/dish.png', // путь
+        iconImageSize: [28, 28], // размеры
+        iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
+    },
+    {
+        latitude: 53.301236,
+        longitude: 34.313452,
+        hintContent: 'Кафе',
+        balloonContent: [
+            '<h3 class="center">Гриль & бар 13</h3>' +
+            '<div>Время работы</div>' +
+            '<ul>\n' +
+            '  <li>Понедельник 12:00 – 00:00</li>\n' +
+            '  <li>Вторник 12:00 – 00:00</li>\n' +
+            '  <li>Среда 12:00 – 00:00</li>\n' +
+            '  <li>Четверг 10:00 – 00:00</li>\n' +
+            '  <li>Пятница 10:00 – 00:00</li>\n' +
+            '  <li>Суббота 10:00 – 00:00</li>\n' +
+            '  <li>Воскресенье 10:00 – 20:00</li>\n' +
+            '</ul>'
+
+        ],
+        iconLayout: 'default#image', // тип макета
+        iconImageHref: 'img/icon/cafe.png', // путь
         iconImageSize: [28, 28], // размеры
         iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
     },
@@ -124,6 +147,29 @@ var placemarks = [
         iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
     },
     {
+        latitude: 53.308375,
+        longitude: 34.302294,
+        hintContent: 'Пиццерия',
+        balloonContent: [
+            '<h3 class="center">Bona Pizza\n</h3>' +
+            '<div>Время работы</div>' +
+            '<ul>\n' +
+            '  <li>Понедельник 10:00 – 22:00</li>\n' +
+            '  <li>Вторник 10:00 – 22:00</li>\n' +
+            '  <li>Среда 10:00 – 22:00</li>\n' +
+            '  <li>Четверг 10:00 – 22:00</li>\n' +
+            '  <li>Пятница 10:00 – 22:00</li>\n' +
+            '  <li>Суббота 10:00 – 22:00</li>\n' +
+            '  <li>Воскресенье 10:00 – 22:00</li>\n' +
+            '</ul>'
+
+        ],
+        iconLayout: 'default#image', // тип макета
+        iconImageHref: 'img/icon/fast-food.png', // путь
+        iconImageSize: [28, 28], // размеры
+        iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
+    },
+    {
         latitude: 53.301997,
         longitude: 34.305915,
         hintContent: 'Суши-бар, пиццерия',
@@ -140,6 +186,28 @@ var placemarks = [
             '  <li>Воскресенье 11:00 – 23:00</li>\n' +
             '</ul>'
 
+        ],
+        iconLayout: 'default#image', // тип макета
+        iconImageHref: 'img/icon/sush.png', // путь
+        iconImageSize: [28, 28], // размеры
+        iconImageOffset: [-14, -14] // по умолчанию левый верхний угол
+    },
+    {
+        latitude: 53.309106,
+        longitude: 34.304686,
+        hintContent: 'Доставка еды и обедов, суши-бар',
+        balloonContent: [
+            '<h3 class="center">Чиккен Пицца\n</h3>' +
+            '<div>Время работы</div>' +
+            '<ul>\n' +
+            '  <li>Понедельник 10:00 – 22:00</li>\n' +
+            '  <li>Вторник 10:00 – 22:00</li>\n' +
+            '  <li>Среда 10:00 – 22:00</li>\n' +
+            '  <li>Четверг 10:00 – 22:00</li>\n' +
+            '  <li>Пятница 10:00 – 22:00</li>\n' +
+            '  <li>Суббота 10:00 – 22:00</li>\n' +
+            '  <li>Воскресенье 10:00 – 22:00</li>\n' +
+            '</ul>'
         ],
         iconLayout: 'default#image', // тип макета
         iconImageHref: 'img/icon/sush.png', // путь
