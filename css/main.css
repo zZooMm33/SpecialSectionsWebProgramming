@@ -1,9 +1,35 @@
 .center{
     text-align: center;
 }
+table{
+    padding: 10px;
+    border: 2px solid grey;
+    border-collapse: collapse;
+    width: 100%;
+}
+td{
+    padding: 10px;
+    border: 2px solid grey;
+    font-size: 16px;
+}
+th {
+    color: #ffffff;
+    font-weight: bold;
+    background: #00bf80;
+    font-size: 20px;
 
-.sayonara-img{
-    height: 50%;
+    padding: 5px;
+    border: 2px solid grey;
+}
+#col-id{
+    width: 10%;
+}
+#col-user-id{
+    width: 10%;
+}
+#col-title{
     width: 50%;
-    margin-top: 10%;
+}
+#col-completed{
+    width: 30%;
 }

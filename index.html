@@ -3,12 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>master</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
     <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
+
     <div class="center">
-        <img class="sayonara-img" src="img/Sayonara-no-Asa-ni-Yakusoku-no-Hana-wo-Kazarou.png" alt="Украсть прощальное утро цветами обещания">
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-12">
+                    <button id="load-todo" type="button" class="btn btn-info">Загрузить данные в таблицу</button>
+
+                    <table id="main-table" class="mt-4">
+                        <tr>
+                            <th id="col-user-id">user id</th>
+                            <th id="col-id">id</th>
+                            <th id="col-title">title</th>
+                            <th id="col-completed">completed</th>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
     <script src="js/main.js"></script>
 </body>
 </html>
