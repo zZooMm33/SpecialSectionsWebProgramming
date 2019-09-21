@@ -250,7 +250,7 @@ function init(){
         var myPlacemark = new ymaps.Placemark([placemarks[i].latitude, placemarks[i].longitude],
             {
                 hintContent: placemarks[i].hintContent,
-                balloonContent: placemarks[i].balloonContent.join('') // склеит все элементы массива в строку
+                balloonContent: placemarks[i].balloonContent
             },
             {
                 iconLayout: placemarks[i].iconLayout,
