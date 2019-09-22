@@ -4,7 +4,7 @@ function buttonLoadTODOS() {
     // Создаём объект класса XMLHttpRequest
     const request = new XMLHttpRequest();
     const url = "https://jsonplaceholder.typicode.com/todos";
-    request.open('GET', url);
+    request.open('GET', url, true);
 
     // Указываем заголовки для сервера, говорим что тип данных, - контент который мы хотим получить должен быть не закодирован.
     request.setRequestHeader('Content-Type', 'application/x-www-form-url');
@@ -33,6 +33,8 @@ function buttonLoadTODOS() {
                     addRowInTable('main-table', userId, id, title, completed);
                 }
 
+                var selectedValue = document.getElementById("filterTODOS").options.selectedIndex;
+                changeFilter(selectedValue);
             }
         }});
 
