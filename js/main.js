@@ -33,8 +33,9 @@ function buttonLoadTODOS() {
                     addRowInTable('main-table', userId, id, title, completed);
                 }
 
-                var selectedValue = document.getElementById("filterTODOS").options.selectedIndex;
-                changeFilter(selectedValue);
+
+                var n = document.getElementById("filterTODOS").options.selectedIndex;
+                changeFilter(document.getElementById("filterTODOS").options[n].value);
             }
         }});
 
