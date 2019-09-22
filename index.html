@@ -12,21 +12,21 @@
         <div class="container mt-4">
             <div class="row">
                 <div class="col-12">
-                    <button id="load-todo" type="button" class="btn btn-info">Загрузить данные в таблицу</button>
+                    <button onclick="buttonTask();" id="task" type="button" class="btn btn-info">Задание</button>
+                    <button onclick="buttonLoadTODOS();" id="load-todo" type="button" class="btn btn-info">Загрузить данные в таблицу</button>
 
                     <table id="main-table" class="mt-4">
-                        <tr>
-                            <th id="col-user-id">user id</th>
-                            <th id="col-id">id</th>
-                            <th id="col-title">title</th>
-                            <th id="col-completed">completed</th>
-                        </tr>
-                        <tr>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
+                        <thead>
+                            <tr>
+                                <th id="col-user-id">user id</th>
+                                <th id="col-id">id</th>
+                                <th id="col-title">title</th>
+                                <th id="col-completed">completed</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
                     </table>
                 </div>
             </div>
