@@ -8,6 +8,7 @@
         <link rel="stylesheet" href="assets/css/game/game.css">
         <link rel="stylesheet" href="assets/css/game/settings.css">
         <link rel="stylesheet" href="assets/css/game/player.css">
+        <link rel="stylesheet" href="assets/css/game/enemy.css">
     </head>
     <body>
 
@@ -27,9 +28,7 @@
                             <div class="col-6">
                                 <div class="settings">
                                     <h1>Настройки</h1>
-                                    <button type="button" id="startGame" class="btn btn-success">Start</button>
-                                    <br>
-                                    <button type="button" id="stopGame" class="btn btn-danger">Stop</button>
+                                    <button type="button" id="startGame" class="btn btn-success" onclick="startGame();">Start</button>
                                     <br>
 
                                     <p>
@@ -56,7 +55,7 @@
             <source src="assets/sounds/tanks/Shot.mp3" type="audio/mp3" />
         </audio>
 
-        <audio class="startGame">
+        <audio class="startGameSound">
             <source src="assets/sounds/tanks/StartGame.mp3" type="audio/mp3" />
         </audio>
 
@@ -70,5 +69,6 @@
         <script src="js/tanks/tanksModel.js"></script>
         <script src="js/tanks/tanksView.js"></script>
         <script src="js/tanks/tanksController.js"></script>
+        <script src="js/startGame.js"></script>
     </body>
 </html>

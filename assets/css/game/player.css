@@ -1,25 +1,27 @@
 .player{
-    position: relative;
+    position: absolute;
     width: 40px;
     height: 40px;
     background-image: url(../../img/tanks.png);
     background-repeat:no-repeat;
+
+    display: none;
 }
 
 .player.left{
-    background-position: -148px -11px;
+    background-position: -148px -225px;
 }
 
 .player.top{
-    background-position: -105px -11px;
+    background-position: -105px -225px;
 }
 
 .player.right{
-    background-position: -6px -11px;
+    background-position: -6px -225px;
 }
 
 .player.bottom{
-    background-position: -56px -11px;
+    background-position: -56px -225px;
 }
 
 .x3-size-sprite{
@@ -27,14 +29,10 @@
     //210  x  146
 }
 
-.bullet{
+.bulletPlayer{
     position: absolute;
     width: 5px;
     height: 5px;
-    background: red;
+    background: greenyellow;
     border-radius: 10px;
-}
-
-.enemy{
-
 }

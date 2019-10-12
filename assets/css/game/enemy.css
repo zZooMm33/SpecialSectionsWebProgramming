@@ -1,0 +1,36 @@
+.enemy{
+    position: absolute;
+    width: 40px;
+    height: 40px;
+    background-image: url(../../img/tanks.png);
+    background-repeat:no-repeat;
+}
+
+.enemy.left{
+    background-position: -148px -11px;
+}
+
+.enemy.top{
+    background-position: -105px -11px;
+}
+
+.enemy.right{
+    background-position: -6px -11px;
+}
+
+.enemy.bottom{
+    background-position: -56px -11px;
+}
+
+.x3-size-sprite{
+    background-size: 600px 430px;
+//210  x  146
+}
+
+.bulletEnemy{
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    background: red;
+    border-radius: 10px;
+}
