@@ -1,14 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>master</title>
-    <link rel="stylesheet" href="css/main.css">
-</head>
-<body>
-    <div class="center">
-        <img class="sayonara-img" src="img/Sayonara-no-Asa-ni-Yakusoku-no-Hana-wo-Kazarou.png" alt="Украсть прощальное утро цветами обещания">
-    </div>
-    <script src="js/main.js"></script>
-</body>
+    <head>
+        <meta charset="UTF-8">
+        <title>Mario</title>
+        <link rel="stylesheet" href="assets/css/style.css">
+    </head>
+    <body>
+
+        <div class="mainScene">
+            <div class="character"></div>
+            <div class="goomba"></div>
+        </div>
+
+        <audio class="death">
+            <source src="assets/sounds/tanks/Death.mp3" type="audio/mp3" />
+        </audio>
+
+        <audio class="shot">
+            <source src="assets/sounds/tanks/Shot.mp3" type="audio/mp3" />
+        </audio>
+
+        <audio class="startGame">
+            <source src="assets/sounds/tanks/StartGame.mp3" type="audio/mp3" />
+        </audio>
+
+        <audio class="hitEnemyTank">
+            <source src="assets/sounds/tanks/HitAnEnemyTank.mp3" type="audio/mp3" />
+        </audio>
+
+        <script src="js/marioModel.js"></script>
+        <script src="js/marioView.js"></script>
+        <script src="js/marioController.js"></script>
+    </body>
 </html>
