@@ -1,32 +1,25 @@
 /*
 
-Mario model
+Tanks model
 
 */
 
-const INITIAL_PLAYER_X = -10;
-const INITIAL_PLAYER_Y = 100;
+const LEFT_BORDER = 0;
+const RIGHT_BORDER = document.querySelector('.game').offsetWidth;
+const TOP_BORDER = 0;
+const BOTTOM_BORDER = document.querySelector('.game').offsetHeight;
+
+const INITIAL_PLAYER_X = (RIGHT_BORDER - 40) / 2;
+const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 40) * 3 / 4 ;
 
 const INITIAL_GOOMBA_X = -200;
 const INITIAL_GOOMBA_Y = 0;
 
-const LEFT_BORDER = -275;
-const RIGHT_BORDER = 235;
-
-const TOP_BORDER = -415;
-const BOTTOM_BORDER = 153;
-
-const KILLER_HEIGHT = 15;
-const GOOMBA_HEIGHT = 30;
-
 const PLAYER_STEP = 5;
 const BULLET_STEP = 10;
-const GOOMBA_STEP = 5;
+const ENEMY_STEP = 5;
 
 const PLAYER_LIVE = 3;
-
-var PlayerID = null;
-var GoombaID = null;
 
 var Model = function () {
     this.objs = {
@@ -134,19 +127,19 @@ Model.prototype.playerShot = function(e, shot, sound){
 
         switch (tanksModel.objs.player.direction) {
             case "top":{
-                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 16, y - 5);
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 32, y - 5);
                 break;
             }
             case "bottom":{
-                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 16, y + 35);
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 32, y + 35);
                 break;
             }
             case "left":{
-                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x, y + 15);
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 10, y + 16);
                 break;
             }
             case "right":{
-                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 40, y + 15);
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 50, y + 16);
                 break;
             }
         }
@@ -215,15 +208,15 @@ Model.prototype.movingBullet = function () {
 function checkScreenBorders(obj, x, y) {
 
     if (obj.type == "player"){
-        if (!(x <= LEFT_BORDER || x >= RIGHT_BORDER)) {
+        if (!(x <= LEFT_BORDER || x + 40 >= RIGHT_BORDER)) {
             obj.x = x;
         }
-        if (!(y <= TOP_BORDER || y >= BOTTOM_BORDER)) {
+        if (!(y <= TOP_BORDER || y + 40 >= BOTTOM_BORDER)) {
             obj.y = y;
         }
     }
     else if (obj.type == "bullet"){
-        if (!(x <= LEFT_BORDER || x - 40 >= RIGHT_BORDER)) {
+        if (!(x - 10  <= LEFT_BORDER || x - 10 >= RIGHT_BORDER)) {
             obj.x = x;
         }
         else{
@@ -232,7 +225,7 @@ function checkScreenBorders(obj, x, y) {
             if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
             return;
         }
-        if (!(y + 15 <= TOP_BORDER || y - 23 >= BOTTOM_BORDER)) {
+        if (!(y <= TOP_BORDER || y + 5 >= BOTTOM_BORDER)) {
             obj.y = y;
         }
         else{

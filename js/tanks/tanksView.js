@@ -54,8 +54,8 @@ View.prototype.deleteBullet = function (bullet){
 };
 
 View.prototype.render = function (objs) {
-    this.player.style.left = 'calc(50% + ' + objs.player.x + 'px)';
-    this.player.style.top = 'calc(70% + ' + objs.player.y + 'px)';
+    this.player.style.left = objs.player.x + 'px';
+    this.player.style.top = objs.player.y + 'px';
 
 
     this.player.classList.remove("right", "left", "top", "bottom");
@@ -83,8 +83,8 @@ View.prototype.render = function (objs) {
 
         try {
             var bullet = document.querySelector('#' + value.id);
-            bullet.style.left = 'calc(50% + ' + value.x + 'px)';
-            bullet.style.top = 'calc(70% + ' + value.y + 'px)';
+            bullet.style.left = value.x + 'px';
+            bullet.style.top = value.y + 'px';
         }
         catch (e) {
             // пуля была удалена во время отрисовки
