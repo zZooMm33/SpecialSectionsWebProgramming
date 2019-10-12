@@ -23,7 +23,7 @@ Controller.prototype.moving = function(e) {
 };
 
 Controller.prototype.jumping = function() {
-    this.tanksModel.initMarioJump(this.tanksView.jumpSound);
+    this.tanksModel.initMarioJump(this.tanksView.jumpSound, this.tanksView.checkSound);
 };
 
 Controller.prototype.needRendering = function(){

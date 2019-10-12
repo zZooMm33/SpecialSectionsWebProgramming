@@ -43,7 +43,7 @@ var Model = function () {
 Model.prototype.init = function(renderFunction){
     this.needRendering = renderFunction;
 
-    GoombaID = requestAnimationFrame(this.walkingGoomba);
+    GoombaID = requestAnimationFrame(this.movingBullet);
 };
 
 Model.prototype.isBusy = function () {
@@ -152,7 +152,7 @@ Model.prototype.checkMarioGoombaCollision = function (mario, goomba) {
     return false;
 };
 
-Model.prototype.walkingGoomba = function () {
+Model.prototype.movingBullet = function () {
     var x = marioModel.getCoords(marioModel.objs.goomba).x;
 
     if (marioModel.objs.goomba.direction === 'right') {
@@ -168,10 +168,10 @@ Model.prototype.walkingGoomba = function () {
     }
     else if (collision === 'die'){
         tanksController.dieMario();
-        requestAnimationFrame(marioModel.walkingGoomba);
+        requestAnimationFrame(marioModel.movingBullet);
     }
     else if (!collision) {
-        requestAnimationFrame(marioModel.walkingGoomba);
+        requestAnimationFrame(marioModel.movingBullet);
     }
 };
 

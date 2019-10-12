@@ -13,6 +13,10 @@ var View = function() {
     this.onClickJumpEvent = null;
 };
 
+View.prototype.checkSound = function (){
+    return true;
+};
+
 View.prototype.init = function (){
     document.addEventListener('keydown', this.onKeyDownEvent);
     document.addEventListener('click', this.onClickJumpEvent);

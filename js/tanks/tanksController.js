@@ -12,6 +12,8 @@ var Controller = function (View, Model) {
 Controller.prototype.init = function() {
     this.tanksView.onKeyDownEvent = this.moving.bind(this);
 
+    this.tanksView.onKeyUpEvent = this.shot.bind(this);
+
     this.tanksView.init();
     this.tanksModel.init(this.needRendering.bind(this));
 
@@ -22,9 +24,20 @@ Controller.prototype.moving = function(e) {
     this.tanksModel.playerMove(e);
 };
 
+Controller.prototype.shot = function(e) {
+    this.tanksModel.playerShot(e, this.tanksView.shotSound, this.tanksView.checkSound());
+};
 
 Controller.prototype.needRendering = function(){
     this.tanksView.render(tanksModel.objs);
+};
+
+Controller.prototype.addBullet = function(bullet){
+    this.tanksView.newBullet(bullet);
+};
+
+Controller.prototype.deleteBullet = function(bullet){
+    this.tanksView.deleteBullet(bullet);
 };
 
 Controller.prototype.dieMario = function() {

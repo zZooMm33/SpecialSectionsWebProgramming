@@ -4,8 +4,8 @@ Mario model
 
 */
 
-const INITIAL_PLAYER_X = 0;
-const INITIAL_PLAYER_Y = 0;
+const INITIAL_PLAYER_X = -10;
+const INITIAL_PLAYER_Y = 100;
 
 const INITIAL_GOOMBA_X = -200;
 const INITIAL_GOOMBA_Y = 0;
@@ -20,6 +20,7 @@ const KILLER_HEIGHT = 15;
 const GOOMBA_HEIGHT = 30;
 
 const PLAYER_STEP = 5;
+const BULLET_STEP = 10;
 const GOOMBA_STEP = 5;
 
 const PLAYER_LIVE = 3;
@@ -29,27 +30,26 @@ var GoombaID = null;
 
 var Model = function () {
     this.objs = {
-        'player': {
+        player: {
+            type: "player",
             x: INITIAL_PLAYER_X,
             y: INITIAL_PLAYER_Y,
             direction: 'top'
         },
-        'goomba': {
+        'enemy': {
+            type: "enemy",
             x: INITIAL_GOOMBA_X,
             y: INITIAL_GOOMBA_Y,
             direction: 'right'
-        }
+        },
+        bullet: []
     };
-
-    this.busy = false;
-    this.up = true;
-    this.endJump = false;
 };
 
 Model.prototype.init = function(renderFunction){
     this.needRendering = renderFunction;
 
-    GoombaID = requestAnimationFrame(this.walkingGoomba);
+    requestAnimationFrame(this.movingBullet);
 };
 
 Model.prototype.isBusy = function () {
@@ -110,6 +110,46 @@ Model.prototype.playerMove = function(e){
             tanksModel.setCoords(tanksModel.objs.player,  null, y + PLAYER_STEP);
             break;
         }
+
+    }
+};
+
+Model.prototype.playerShot = function(e, shot, sound){
+    var keyCode = e.keyCode;
+    var x = tanksModel.getCoords(tanksModel.objs.player).x;
+    var y = tanksModel.getCoords(tanksModel.objs.player).y;
+
+    if (keyCode == 32){
+
+        var bullet = {
+            type: "bullet",
+            id: "bullet" + uuidv4(),
+            direction: tanksModel.objs.player.direction
+        };
+
+        tanksModel.objs.bullet.push(bullet);
+        tanksController.addBullet(bullet);
+
+        if (sound) shot.play();
+
+        switch (tanksModel.objs.player.direction) {
+            case "top":{
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 16, y - 5);
+                break;
+            }
+            case "bottom":{
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 16, y + 35);
+                break;
+            }
+            case "left":{
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x, y + 15);
+                break;
+            }
+            case "right":{
+                tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x + 40, y + 15);
+                break;
+            }
+        }
     }
 };
 
@@ -134,36 +174,80 @@ Model.prototype.checkMarioGoombaCollision = function (player, goomba) {
     return false;
 };
 
-Model.prototype.walkingGoomba = function () {
-    var x = tanksModel.getCoords(tanksModel.objs.goomba).x;
+Model.prototype.movingBullet = function () {
 
-    if (tanksModel.objs.goomba.direction === 'right') {
-        tanksModel.setCoords(tanksModel.objs.goomba, x + GOOMBA_STEP);
-    }
-    else {
-        tanksModel.setCoords(tanksModel.objs.goomba, x - GOOMBA_STEP);
-    }
-    var collision = tanksModel.checkMarioGoombaCollision(tanksView.mario, tanksView.goomba);
-    if (collision === 'kill') {
-        // cancelAnimationFrame(GoombaID);
-        tanksController.dieGoomba();
-    }
-    else if (collision === 'die'){
-        tanksController.dieMario();
-        requestAnimationFrame(tanksModel.walkingGoomba);
-    }
-    else if (!collision) {
-        requestAnimationFrame(tanksModel.walkingGoomba);
-    }
+
+    $.each(tanksModel.objs.bullet, function(index, value) {
+        try {
+            switch (value.direction) {
+                case "top":{
+                    tanksModel.setCoords(value, null, value.y - BULLET_STEP);
+                    break;
+                }
+                case "left":{
+                    tanksModel.setCoords(value, value.x - BULLET_STEP);
+                    break;
+                }
+                case "bottom":{
+                    tanksModel.setCoords(value, null, value.y + BULLET_STEP);
+                    break;
+                }
+                case "right":{
+                    tanksModel.setCoords(value, value.x + BULLET_STEP);
+                    break;
+                }
+            }
+
+            // коллизия
+        }
+        catch (e) {
+
+            // пуля была удалена во время движения
+        }
+
+    });
+
+
+
+    requestAnimationFrame(tanksModel.movingBullet);
 };
 
 function checkScreenBorders(obj, x, y) {
-    if (!(x <= LEFT_BORDER || x >= RIGHT_BORDER)) {
-        obj.x = x;
+
+    if (obj.type == "player"){
+        if (!(x <= LEFT_BORDER || x >= RIGHT_BORDER)) {
+            obj.x = x;
+        }
+        if (!(y <= TOP_BORDER || y >= BOTTOM_BORDER)) {
+            obj.y = y;
+        }
     }
-    if (!(y <= TOP_BORDER || y >= BOTTOM_BORDER)) {
-        obj.y = y;
+    else if (obj.type == "bullet"){
+        if (!(x <= LEFT_BORDER || x - 40 >= RIGHT_BORDER)) {
+            obj.x = x;
+        }
+        else{
+            tanksController.deleteBullet(obj);
+            var index = tanksModel.objs.bullet.indexOf(obj);
+            if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
+            return;
+        }
+        if (!(y + 15 <= TOP_BORDER || y - 23 >= BOTTOM_BORDER)) {
+            obj.y = y;
+        }
+        else{
+            tanksController.deleteBullet(obj);
+            var index = tanksModel.objs.bullet.indexOf(obj);
+            if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
+        }
     }
+}
+
+function uuidv4() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+        return v.toString(16);
+    });
 }
 
 var tanksModel = new Model();

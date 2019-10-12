@@ -11,21 +11,3 @@
     border: 1px solid black;
     background: #90908d;
 }
-
-.character {
-    position: absolute;
-    width: 30px;
-    height: 40px;
-    background-image: url(../img/mario.png);
-    background-repeat:no-repeat;
-    background-size: 100% 100%;
-}
-
-.goomba {
-    position: absolute;
-    width: 30px;
-    height: 30px;
-    background-image: url(../img/goomba.png);
-    background-repeat:no-repeat;
-    background-size: 100% 100%;
-}
