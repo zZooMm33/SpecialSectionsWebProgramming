@@ -19,8 +19,8 @@ View.prototype.init = function (){
 };
 
 View.prototype.render = function (objs) {
-    this.mario.style.left = 'calc(50% + ' + objs.mario.x + 'px)';
-    this.mario.style.top = 'calc(68.5% + ' + objs.mario.y + 'px)';
+    this.mario.style.left = 'calc(50% + ' + objs.player.x + 'px)';
+    this.mario.style.top = 'calc(68.5% + ' + objs.player.y + 'px)';
 
     this.goomba.style.left = 'calc(50% + ' + objs.goomba.x + 'px)';
     this.goomba.style.top = 'calc(70% + ' + objs.goomba.y + 'px)';

@@ -24,7 +24,7 @@ var GoombaID = null;
 
 var Model = function () {
     this.objs = {
-        'mario': {
+        'player': {
             x: INITIAL_MARIO_X,
             y: INITIAL_MARIO_Y
         },
@@ -89,17 +89,17 @@ Model.prototype.getCoords = function (obj) {
     }
 };
 
-Model.prototype.marioMove = function(e){
+Model.prototype.playerMove = function(e){
     var keyCode = e.keyCode;
-    var x = marioModel.getCoords(marioModel.objs.mario).x;
+    var x = marioModel.getCoords(marioModel.objs.player).x;
 
     switch (keyCode) {
         case KEY_CODE_RIGHT: {
-            marioModel.setCoords(marioModel.objs.mario, x + MARIO_STEP);
+            marioModel.setCoords(marioModel.objs.player, x + MARIO_STEP);
             break;
         }
         case KEY_CODE_LEFT: {
-            marioModel.setCoords(marioModel.objs.mario, x - MARIO_STEP);
+            marioModel.setCoords(marioModel.objs.player, x - MARIO_STEP);
             break;
         }
     }
@@ -114,12 +114,12 @@ Model.prototype.initMarioJump = function (sound) {
 };
 
 Model.prototype.marioJump = function(){
-    var y = marioModel.getCoords(marioModel.objs.mario).y;
+    var y = marioModel.getCoords(marioModel.objs.player).y;
     if (marioModel.isUp()) {
-        marioModel.setCoords(marioModel.objs.mario, null, y - MARIO_STEP);
+        marioModel.setCoords(marioModel.objs.player, null, y - MARIO_STEP);
     }
     else {
-        marioModel.setCoords(marioModel.objs.mario, null, y + MARIO_STEP);
+        marioModel.setCoords(marioModel.objs.player, null, y + MARIO_STEP);
     }
     if (marioModel.isJumpEnd()) {
         marioModel.changeBusy();
@@ -135,7 +135,7 @@ Model.prototype.marioJump = function(){
 Model.prototype.checkMarioGoombaCollision = function (mario, goomba) {
     var marioLeft = mario.getBoundingClientRect().left;
     var marioRight = mario.getBoundingClientRect().right;
-    var marioY = this.objs.mario.y;
+    var marioY = this.objs.player.y;
     var goombaLeft = goomba.getBoundingClientRect().left;
     var goombaRight = goomba.getBoundingClientRect().right;
     var goombaY = this.objs.goomba.y;
@@ -161,13 +161,13 @@ Model.prototype.walkingGoomba = function () {
     else {
         marioModel.setCoords(marioModel.objs.goomba, x - GOOMBA_STEP);
     }
-    var collision = marioModel.checkMarioGoombaCollision(marioView.mario, marioView.goomba);
+    var collision = marioModel.checkMarioGoombaCollision(tanksView.mario, tanksView.goomba);
     if (collision === 'kill') {
         // cancelAnimationFrame(GoombaID);
-        marioController.dieGoomba();
+        tanksController.dieGoomba();
     }
     else if (collision === 'die'){
-        marioController.dieMario();
+        tanksController.dieMario();
         requestAnimationFrame(marioModel.walkingGoomba);
     }
     else if (!collision) {
