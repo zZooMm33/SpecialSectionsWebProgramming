@@ -13,12 +13,12 @@ function startModel() {
     const INITIAL_PLAYER_X = (RIGHT_BORDER - 20) / 2;
     const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 20) / 2;
 
-    const PLAYER_STEP = 5;
+    const PLAYER_STEP = 6;
     const BULLET_STEP = 10;
     const ENEMY_STEP = 5;
 
     const ENEMY_HP = 3;
-    const ENEMY_SHOT_FREQUENCE = 2; // каждые N секунд выстрел
+    const ENEMY_SHOT_FREQUENCE = 0.5; // каждые N секунд выстрел
 
     var StartDate = new Date();
 
@@ -51,7 +51,7 @@ function startModel() {
     Model.prototype.init = function(renderFunction){
         this.needRendering = renderFunction;
 
-        requestAnimationFrame(this.movingBullet);
+        requestAnimationFrame(this.movingEnemyAndBullet);
         requestAnimationFrame(this.stopwatch);
         requestAnimationFrame(this.shotEnemy);
     };
@@ -127,6 +127,7 @@ function startModel() {
                 id: "bullet" + uuidv4(),
                 width: 5,
                 height: 5,
+                speed: BULLET_STEP,
                 direction: tanksModel.objs.player.direction
             };
 
@@ -161,26 +162,26 @@ function startModel() {
     };
 
 
-    Model.prototype.movingBullet = function () {
+    Model.prototype.movingEnemyAndBullet = function () {
         if (tanksModel.objs.isGameOver) return;
 
         $.each(tanksModel.objs.bullet, function(index, value) {
             try {
                 switch (value.direction) {
                     case "top":{
-                        tanksModel.setCoords(value, null, value.y - BULLET_STEP);
+                        tanksModel.setCoords(value, null, value.y - value.speed);
                         break;
                     }
                     case "left":{
-                        tanksModel.setCoords(value, value.x - BULLET_STEP);
+                        tanksModel.setCoords(value, value.x - value.speed);
                         break;
                     }
                     case "bottom":{
-                        tanksModel.setCoords(value, null, value.y + BULLET_STEP);
+                        tanksModel.setCoords(value, null, value.y + value.speed);
                         break;
                     }
                     case "right":{
-                        tanksModel.setCoords(value, value.x + BULLET_STEP);
+                        tanksModel.setCoords(value, value.x + value.speed);
                         break;
                     }
                 }
@@ -188,12 +189,36 @@ function startModel() {
             catch (e) {
                 // пуля была удалена во время движения
             }
+        });
 
+        $.each(tanksModel.objs.enemy, function(index, value) {
+            try {
+                switch (value.direction) {
+                    case "top":{
+                        tanksModel.setCoords(value, null, value.y - value.speed);
+                        break;
+                    }
+                    case "left":{
+                        tanksModel.setCoords(value, value.x - value.speed);
+                        break;
+                    }
+                    case "bottom":{
+                        tanksModel.setCoords(value, null, value.y + value.speed);
+                        break;
+                    }
+                    case "right":{
+                        tanksModel.setCoords(value, value.x + value.speed);
+                        break;
+                    }
+                }
+            }
+            catch (e) {
+                // enemy был убит во время движения
+            }
         });
 
 
-
-        requestAnimationFrame(tanksModel.movingBullet);
+        requestAnimationFrame(tanksModel.movingEnemyAndBullet);
     };
 
     Model.prototype.shotEnemy = function () {
@@ -213,6 +238,7 @@ function startModel() {
                         id: "bullet" + uuidv4(),
                         width: 5,
                         height: 5,
+                        speed: BULLET_STEP,
                         direction: value.direction
                     };
 
@@ -294,6 +320,7 @@ function startModel() {
                     y: 10,
                     hp: ENEMY_HP,
                     time: 0,
+                    speed: ENEMY_STEP,
                     startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
@@ -307,6 +334,7 @@ function startModel() {
                     y: 10,
                     hp: ENEMY_HP,
                     time: 0,
+                    speed: ENEMY_STEP,
                     startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
@@ -320,6 +348,7 @@ function startModel() {
                     y:  BOTTOM_BORDER - 10 - 40,
                     hp: ENEMY_HP,
                     time: 0,
+                    speed: ENEMY_STEP,
                     startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
@@ -333,6 +362,7 @@ function startModel() {
                     y:  BOTTOM_BORDER - 10 - 40,
                     hp: ENEMY_HP,
                     time: 0,
+                    speed: ENEMY_STEP,
                     startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
@@ -364,29 +394,35 @@ function startModel() {
     Model.prototype.checkScreenBordersTanks = function (obj, x, y) {
         if (tanksModel.objs.isGameOver) return;
 
-        if (obj.type == "player"){
+        if (obj.type == "player" || obj.type == "enemy"){
 
             var oldX = obj.x;
             var oldY = obj.y;
-            var flagCollEnemy = false;
+            var flagCollObj = false;
 
             //стена
             if (!(x <= LEFT_BORDER || x + 40 >= RIGHT_BORDER)) {
                 obj.x = x;
             }
+            else flagCollObj = true;
+
             if (!(y <= TOP_BORDER || y + 40 >= BOTTOM_BORDER)) {
                 obj.y = y;
             }
+            else flagCollObj = true;
 
             //После проверки со стеной чекаем на танк, если врезались вернем старые значения
             $.each(tanksModel.objs.enemy, function(enemyIndex, enemyValue) {
-                if (checkCollision(obj, enemyValue)) flagCollEnemy = true;
+                if (obj.type != "player" && checkCollision(obj, tanksModel.objs.player)) flagCollObj = true;
+                if (enemyValue.id != obj.id && checkCollision(obj, enemyValue)) flagCollObj = true;
             });
 
             //Врезались во врага - вернем старые координаты
-            if (flagCollEnemy) {
+            if (flagCollObj) {
                 obj.x = oldX;
                 obj.y = oldY;
+
+                if (obj.type != "player") obj.direction = randDirection();
             }
         }
         else if (obj.type == "bullet"){
@@ -440,7 +476,7 @@ function startModel() {
 
                 // обновляем жизнь
                 tanksModel.objs.player.life--;
-                tanksModel.objs.playerisLife = false;
+                tanksModel.objs.player.isLife = false;
                 tanksController.changeLife(tanksModel.objs.player.life);
 
                 // удаляем всех врагов и все пули (для рестарта)
@@ -492,6 +528,20 @@ function startModel() {
         if (XColl&YColl){ return true; }
         return false;
     };
+
+    function randDirection() {
+        var numb = randomInteger(0, 3);
+        if (numb == 0) return "top";
+        else if (numb == 1) return "right";
+        else if (numb == 2) return "bottom";
+        else return "left";
+    }
+
+    function randomInteger(min, max) {
+        // получить случайное число от (min-0.5) до (max+0.5)
+        let rand = min - 0.5 + Math.random() * (max - min + 1);
+        return Math.round(rand);
+    }
 
     function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

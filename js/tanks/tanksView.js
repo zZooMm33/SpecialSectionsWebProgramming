@@ -11,7 +11,6 @@ function startView() {
 
         //звуки-музыка
         this.shotSound = document.querySelector('.shot');
-        this.deathSound = document.querySelector('.death');
         this.startGameSound = document.querySelector('.startGameSound');
         this.hitEnemyTankSound = document.querySelector('.hitEnemyTank');
 
@@ -125,6 +124,26 @@ function startView() {
                 var enemy = document.querySelector('#' + value.id);
                 enemy.style.left = value.x + 'px';
                 enemy.style.top = value.y + 'px';
+
+                enemy.classList.remove("right", "left", "top", "bottom");
+                switch (value.direction) {
+                    case "right": {
+                        enemy.classList.add("right");
+                        break;
+                    }
+                    case "left": {
+                        enemy.classList.add("left");
+                        break;
+                    }
+                    case "top": {
+                        enemy.classList.add("top");
+                        break;
+                    }
+                    case "bottom": {
+                        enemy.classList.add("bottom");
+                        break;
+                    }
+                }
             }
             catch (e) {
                 // пуля была удалена во время отрисовки

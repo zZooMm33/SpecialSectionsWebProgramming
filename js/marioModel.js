@@ -152,7 +152,7 @@ Model.prototype.checkMarioGoombaCollision = function (mario, goomba) {
     return false;
 };
 
-Model.prototype.movingBullet = function () {
+Model.prototype.movingEnemyAndBullet = function () {
     var x = marioModel.getCoords(marioModel.objs.goomba).x;
 
     if (marioModel.objs.goomba.direction === 'right') {
