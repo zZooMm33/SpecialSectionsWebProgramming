@@ -22,7 +22,7 @@ function startModel() {
     const PLAYER_LIVE = 3;
     var PLAYER_SCORE = 0;
     var PLAYER_TIME = 0;
-
+    var PLAYER_LEVEL = 1;
 
     var StartDate = new Date();
 
@@ -32,6 +32,8 @@ function startModel() {
                 type: "player",
                 x: INITIAL_PLAYER_X,
                 y: INITIAL_PLAYER_Y,
+                width: 40,
+                height: 40,
                 direction: 'top'
             },
             enemy: [],
@@ -50,8 +52,8 @@ function startModel() {
         x = x == (undefined || null) ? obj.x : x;
         y = y == (undefined || null) ? obj.y : y;
 
-        checkScreenBorders.call(this, obj, x, y);
-
+        this.checkScreenBordersTanks.call(this, obj, x, y);
+        this.checkCollisionBullet.call(this, obj);
         this.needRendering();
     };
 
@@ -107,6 +109,8 @@ function startModel() {
                 type: "bullet",
                 name: "bulletPlayer",
                 id: "bullet" + uuidv4(),
+                width: 5,
+                height: 5,
                 direction: tanksModel.objs.player.direction
             };
 
@@ -140,26 +144,6 @@ function startModel() {
     };
 
 
-    Model.prototype.checkMarioGoombaCollision = function (player, goomba) {
-        var marioLeft = player.getBoundingClientRect().left;
-        var marioRight = player.getBoundingClientRect().right;
-        var marioY = this.objs.player.y;
-        var goombaLeft = goomba.getBoundingClientRect().left;
-        var goombaRight = goomba.getBoundingClientRect().right;
-        var goombaY = this.objs.goomba.y;
-
-        if (goombaLeft < marioLeft && marioLeft < goombaRight ||
-            goombaLeft < marioRight && marioRight < goombaRight) {
-            if (goombaY - marioY >= KILLER_HEIGHT && goombaY - marioY < GOOMBA_HEIGHT) {
-                return 'kill';
-            }
-            else if (goombaY - marioY < KILLER_HEIGHT) {
-                return 'die'
-            }
-        }
-        return false;
-    };
-
     Model.prototype.movingBullet = function () {
 
         $.each(tanksModel.objs.bullet, function(index, value) {
@@ -183,7 +167,10 @@ function startModel() {
                     }
                 }
 
-                // коллизия
+                // коллизии
+
+
+
             }
             catch (e) {
                 // пуля была удалена во время движения
@@ -201,17 +188,31 @@ function startModel() {
             var sound = tanksController.startSound();
             if (sound != null) sound.play();
         }
+        else if (PLAYER_TIME/1000 >= 4){
+            // Игра началась + танков нет = игрок их убил = некст лвл
+            if (tanksModel.objs.enemy.length == 0){
+                PLAYER_LEVEL++;
+                tanksModel.setCoords(tanksModel.objs.player, INITIAL_PLAYER_X, INITIAL_PLAYER_Y);
+                tanksController.changeLevel(PLAYER_LEVEL);
+                PLAYER_TIME = 0;
+                StartDate = new Date();
+                requestAnimationFrame(tanksModel.stopwatch);
+                return;
+            }
+        }
         // песенка прошла
         else if (PLAYER_TIME/1000 >= 3.2){
-
             // проверка на спавн противников
             if (tanksModel.objs.enemy.length == 0){
+
                 var enemyTop1= {
                     x: 20,
                     y: 10,
                     hp: ENEMY_HP,
                     id: "enemy" + uuidv4(),
                     type: "enemy",
+                    width: 40,
+                    height: 40,
                     direction: "bottom"
                 };
 
@@ -221,6 +222,8 @@ function startModel() {
                     hp: ENEMY_HP,
                     id: "enemy" + uuidv4(),
                     type: "enemy",
+                    width: 40,
+                    height: 40,
                     direction: "left"
                 };
 
@@ -230,6 +233,8 @@ function startModel() {
                     hp: ENEMY_HP,
                     id: "enemy" + uuidv4(),
                     type: "enemy",
+                    width: 40,
+                    height: 40,
                     direction: "right"
                 };
 
@@ -239,6 +244,8 @@ function startModel() {
                     hp: ENEMY_HP,
                     id: "enemy" + uuidv4(),
                     type: "enemy",
+                    width: 40,
+                    height: 40,
                     direction: "top"
                 };
 
@@ -262,7 +269,7 @@ function startModel() {
         requestAnimationFrame(tanksModel.stopwatch);
     };
 
-    function checkScreenBorders(obj, x, y) {
+    Model.prototype.checkScreenBordersTanks = function (obj, x, y) {
 
         if (obj.type == "player"){
             if (!(x <= LEFT_BORDER || x + 40 >= RIGHT_BORDER)) {
@@ -277,21 +284,69 @@ function startModel() {
                 obj.x = x;
             }
             else{
-                tanksController.deleteBullet(obj);
-                var index = tanksModel.objs.bullet.indexOf(obj);
-                if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
+                tanksModel.deleteBullet(obj);
                 return;
             }
             if (!(y <= TOP_BORDER || y + 5 >= BOTTOM_BORDER)) {
                 obj.y = y;
             }
             else{
-                tanksController.deleteBullet(obj);
-                var index = tanksModel.objs.bullet.indexOf(obj);
-                if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
+                tanksModel.deleteBullet(obj);
             }
         }
-    }
+    };
+
+    Model.prototype.checkCollisionBullet =  function (value) {
+        if (value.name == "bulletPlayer"){
+            $.each(tanksModel.objs.enemy, function(enemyIndex, enemyValue) {
+                if(checkCollision(value, enemyValue)){
+                    // удаляем пулю
+                    // -1 хп у врага
+                    tanksModel.deleteBullet(value);
+                    var sound = tanksController.hitEnemyTankSound();
+                    if (sound != null) sound.play();
+
+
+                    enemyValue.hp--;
+                    if (enemyValue.hp == 0) {
+                        //удаляем + очки
+
+                        PLAYER_SCORE += 50;
+                        tanksController.changeScore(PLAYER_SCORE);
+
+                        tanksModel.deleteEnemy(enemyValue);
+                    }
+                }
+            });
+        }
+        else{
+            //Пуля врага
+        }
+    };
+
+    Model.prototype.deleteBullet = function (obj) {
+        tanksController.deleteObject(obj);
+        var index = tanksModel.objs.bullet.indexOf(obj);
+        if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
+    };
+
+    Model.prototype.deleteEnemy = function (obj) {
+        tanksController.deleteObject(obj);
+
+        var index = tanksModel.objs.enemy.indexOf(obj);
+        if (index !== -1) tanksModel.objs.enemy.splice(index, 1);
+    };
+
+    function checkCollision(obj1, obj2) {
+        var XColl=false;
+        var YColl=false;
+
+        if ((obj1.x + obj1.width >= obj2.x) && (obj1.x <= obj2.x + obj2.width)) XColl = true;
+        if ((obj1.y + obj1.height >= obj2.y) && (obj1.y <= obj2.y + obj2.height)) YColl = true;
+
+        if (XColl&YColl){ return true; }
+        return false;
+    };
 
     function uuidv4() {
         return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {

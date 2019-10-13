@@ -60,13 +60,17 @@ function startView() {
         this.game.appendChild(div);
     };
 
-    View.prototype.deleteBullet = function (bullet){
-        var bulletHTML = document.querySelector('#' + bullet.id);
-        this.game.removeChild(bulletHTML);
+    View.prototype.deleteObject = function (object){
+        var objectHTML = document.querySelector('#' + object.id);
+        this.game.removeChild(objectHTML);
     };
 
     View.prototype.changeScore = function (score){
         document.querySelector('#scoreGame').innerHTML = "Score: " + score;
+    };
+
+    View.prototype.changeLevel = function (level){
+        document.querySelector('#levelGame').innerHTML = "Level: " + level;
     };
 
     View.prototype.render = function (objs) {

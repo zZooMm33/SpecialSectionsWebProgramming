@@ -41,18 +41,33 @@ function startController() {
         this.tanksView.newBullet(bullet, className);
     };
 
-    Controller.prototype.deleteBullet = function(bullet){
-        this.tanksView.deleteBullet(bullet);
+    Controller.prototype.deleteObject = function(object){
+        this.tanksView.deleteObject(object);
     };
 
     Controller.prototype.changeScore = function(score){
         this.tanksView.changeScore(score);
     };
 
+    Controller.prototype.changeLevel = function(level){
+        this.tanksView.changeLevel(level);
+    };
+
     Controller.prototype.startSound = function(){
 
         if (this.tanksView.checkSound()){
             return this.tanksView.startGameSound;
+        }
+        else {
+            return null;
+        }
+
+    };
+
+    Controller.prototype.hitEnemyTankSound = function(){
+
+        if (this.tanksView.checkSound()){
+            return this.tanksView.hitEnemyTankSound;
         }
         else {
             return null;
