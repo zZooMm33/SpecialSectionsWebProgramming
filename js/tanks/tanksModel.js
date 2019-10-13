@@ -24,6 +24,7 @@ function startModel() {
 
     var Model = function () {
         this.objs = {
+            isGameOver: false,
             player: {
                 type: "player",
                 x: INITIAL_PLAYER_X,
@@ -32,7 +33,8 @@ function startModel() {
                 time: 0,
                 startDate: new Date(),
 
-                live: 3,
+                life: 3,
+                isLife: true,
                 level: 1,
                 score: 0,
 
@@ -55,6 +57,8 @@ function startModel() {
     };
 
     Model.prototype.setCoords = function (obj, x, y) {
+        if (tanksModel.objs.isGameOver) return;
+
         x = x == (undefined || null) ? obj.x : x;
         y = y == (undefined || null) ? obj.y : y;
 
@@ -76,7 +80,7 @@ function startModel() {
     };
 
     Model.prototype.playerMove = function(e){
-        if (tanksModel.objs.player.time / 1000 <= 3) return;
+        if (tanksModel.objs.player.time / 1000 <= 3 || tanksModel.objs.isGameOver) return;
 
         var keyCode = e.keyCode;
         var x = tanksModel.getCoords(tanksModel.objs.player).x;
@@ -109,7 +113,8 @@ function startModel() {
 
     Model.prototype.playerShot = function(e, shot, sound){
 
-        if (tanksModel.objs.player.time / 1000 <= 3) return;
+        if (tanksModel.objs.player.time / 1000 <= 3 || tanksModel.objs.isGameOver) return;
+
         var keyCode = e.keyCode;
         var x = tanksModel.getCoords(tanksModel.objs.player).x;
         var y = tanksModel.getCoords(tanksModel.objs.player).y;
@@ -157,6 +162,7 @@ function startModel() {
 
 
     Model.prototype.movingBullet = function () {
+        if (tanksModel.objs.isGameOver) return;
 
         $.each(tanksModel.objs.bullet, function(index, value) {
             try {
@@ -191,6 +197,7 @@ function startModel() {
     };
 
     Model.prototype.shotEnemy = function () {
+        if (tanksModel.objs.isGameOver) return;
 
         $.each(tanksModel.objs.enemy, function(index, value) {
 
@@ -247,21 +254,34 @@ function startModel() {
     };
 
     Model.prototype.stopwatch = function () {
+        if (tanksModel.objs.isGameOver) return;
+
         if (tanksModel.objs.player.time == 0){
             var sound = tanksController.startSound();
             if (sound != null) sound.play();
         }
-        else if (tanksModel.objs.player.time/1000 >= 4){
-            // Игра началась + танков нет = игрок их убил = некст лвл
+        else if (tanksModel.objs.player.time/1000 >= 4 || !tanksModel.objs.player.isLife){
+            // Игра началась + танков нет = игрок их убил = некст лвл или игрок умер
             if (tanksModel.objs.enemy.length == 0){
-                tanksModel.objs.player.level++;
                 tanksModel.objs.player.direction = 'top';
                 tanksModel.setCoords(tanksModel.objs.player, INITIAL_PLAYER_X, INITIAL_PLAYER_Y);
-                tanksController.changeLevel(tanksModel.objs.player.level);
+
+                if (!tanksModel.objs.player.isLife){
+                    tanksModel.objs.player.isLife = true;
+                }
+                else {
+                    tanksModel.objs.player.level++;
+                    tanksController.changeLevel(tanksModel.objs.player.level);
+                }
+
                 tanksModel.objs.player.time = 0;
                 tanksModel.objs.player.startDate = new Date();
+
                 requestAnimationFrame(tanksModel.stopwatch);
                 return;
+            }
+            else{
+
             }
         }
         // песенка прошла
@@ -342,6 +362,7 @@ function startModel() {
     };
 
     Model.prototype.checkScreenBordersTanks = function (obj, x, y) {
+        if (tanksModel.objs.isGameOver) return;
 
         if (obj.type == "player"){
 
@@ -386,6 +407,8 @@ function startModel() {
     };
 
     Model.prototype.checkCollisionBullet =  function (value) {
+        if (tanksModel.objs.isGameOver) return;
+
         if (value.name == "bulletPlayer"){
             $.each(tanksModel.objs.enemy, function(enemyIndex, enemyValue) {
                 if(checkCollision(value, enemyValue)){
@@ -408,8 +431,41 @@ function startModel() {
                 }
             });
         }
-        else{
+        else if (value.name == "bulletEnemy"){
             //Пуля врага
+            if(tanksModel.objs.player.isLife && checkCollision(value, tanksModel.objs.player)){
+                // обновляем score
+                tanksModel.objs.player.score -= 100;
+                tanksController.changeScore(tanksModel.objs.player.score);
+
+                // обновляем жизнь
+                tanksModel.objs.player.life--;
+                tanksModel.objs.playerisLife = false;
+                tanksController.changeLife(tanksModel.objs.player.life);
+
+                // удаляем всех врагов и все пули (для рестарта)
+                while(true){
+                    $.each(tanksModel.objs.enemy, function(enemyIndex, enemyValue) {
+                        try{
+                            tanksModel.deleteEnemy(enemyValue);
+                        }
+                        catch (e) {
+                        }
+                    });
+                    $.each(tanksModel.objs.bullet, function(bulletIndex, bulletValue) {
+                        try{
+                            tanksModel.deleteBullet(bulletValue);
+                        }
+                        catch (e) {
+
+                        }
+                    });
+
+                    if (tanksModel.objs.enemy.length == 0 && tanksModel.objs.bullet == 0) break;
+                }
+
+                if (tanksModel.objs.player.life == 0) tanksModel.objs.isGameOver = true;
+            }
         }
     };
 

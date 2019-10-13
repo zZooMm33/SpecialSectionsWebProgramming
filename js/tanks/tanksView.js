@@ -73,6 +73,14 @@ function startView() {
         document.querySelector('#levelGame').innerHTML = "Level: " + level;
     };
 
+    View.prototype.changeLife = function (life){
+        document.querySelector('#numbLife').innerHTML = "Количество жизней: " + life;
+
+        if (life == 0){
+            document.querySelector('.player').style.display = "none";
+            alert("Game Over");
+        }
+    };
     View.prototype.render = function (objs) {
         this.player.style.left = objs.player.x + 'px';
         this.player.style.top = objs.player.y + 'px';
