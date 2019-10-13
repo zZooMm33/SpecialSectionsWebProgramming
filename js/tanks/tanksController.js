@@ -78,18 +78,6 @@ function startController() {
 
     };
 
-    Controller.prototype.dieMario = function() {
-        this.tanksView.player.setAttribute('hidden', 'true');
-
-        this.tanksView.render(tanksModel.objs);
-    };
-
-    Controller.prototype.dieGoomba = function() {
-        this.tanksView.goomba.setAttribute('hidden', 'true');
-
-        this.tanksView.render(tanksModel.objs);
-    };
-
     tanksController = new Controller(tanksView, tanksModel);
 
     tanksController.init();
