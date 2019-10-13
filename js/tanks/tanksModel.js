@@ -14,10 +14,10 @@ function startModel() {
     const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 20) / 2;
 
     const PLAYER_STEP = 6;
-    const BULLET_STEP = 10;
+    const BULLET_STEP = 15;
     const ENEMY_STEP = 5;
 
-    const ENEMY_HP = 3;
+    const ENEMY_HP = 1;
     const ENEMY_SHOT_FREQUENCE = 0.5; // каждые N секунд выстрел
 
     var StartDate = new Date();
