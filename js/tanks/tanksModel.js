@@ -51,6 +51,7 @@ function startModel() {
 
         requestAnimationFrame(this.movingBullet);
         requestAnimationFrame(this.stopwatch);
+        requestAnimationFrame(this.shotEnemy);
     };
 
     Model.prototype.setCoords = function (obj, x, y) {
@@ -205,14 +206,14 @@ function startModel() {
                         id: "bullet" + uuidv4(),
                         width: 5,
                         height: 5,
-                        direction: tanksModel.objs.enemy.direction
+                        direction: value.direction
                     };
 
                     tanksModel.objs.bullet.push(bullet);
                     tanksController.addBullet(bullet, bullet.name);
 
 
-                    switch (tanksModel.objs.player.direction) {
+                    switch (value.direction) {
                         case "top":{
                             tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], value.x + 17, value.y);
                             break;
@@ -222,7 +223,7 @@ function startModel() {
                             break;
                         }
                         case "left":{
-                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x, value.y + 16);
+                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], value.x, value.y + 16);
                             break;
                         }
                         case "right":{
@@ -368,7 +369,7 @@ function startModel() {
             }
         }
         else if (obj.type == "bullet"){
-            if (!(x + 10  <= LEFT_BORDER || x - 10 >= RIGHT_BORDER)) {
+            if (!(x + 10  <= LEFT_BORDER || x - 5 >= RIGHT_BORDER)) {
                 obj.x = x;
             }
             else{
