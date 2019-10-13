@@ -18,11 +18,7 @@ function startModel() {
     const ENEMY_STEP = 5;
 
     const ENEMY_HP = 3;
-
-    const PLAYER_LIVE = 3;
-    var PLAYER_SCORE = 0;
-    var PLAYER_TIME = 0;
-    var PLAYER_LEVEL = 1;
+    const ENEMY_SHOT_FREQUENCE = 2; // каждые N секунд выстрел
 
     var StartDate = new Date();
 
@@ -32,8 +28,17 @@ function startModel() {
                 type: "player",
                 x: INITIAL_PLAYER_X,
                 y: INITIAL_PLAYER_Y,
+
+                time: 0,
+                startDate: new Date(),
+
+                live: 3,
+                level: 1,
+                score: 0,
+
                 width: 40,
                 height: 40,
+
                 direction: 'top'
             },
             enemy: [],
@@ -52,8 +57,13 @@ function startModel() {
         x = x == (undefined || null) ? obj.x : x;
         y = y == (undefined || null) ? obj.y : y;
 
+        // не удаляемые
         this.checkScreenBordersTanks.call(this, obj, x, y);
+
+        //удаляемые
         this.checkCollisionBullet.call(this, obj);
+
+        // перерисовка
         this.needRendering();
     };
 
@@ -65,7 +75,7 @@ function startModel() {
     };
 
     Model.prototype.playerMove = function(e){
-        if (PLAYER_TIME / 1000 <= 3) return;
+        if (tanksModel.objs.player.time / 1000 <= 3) return;
 
         var keyCode = e.keyCode;
         var x = tanksModel.getCoords(tanksModel.objs.player).x;
@@ -98,7 +108,7 @@ function startModel() {
 
     Model.prototype.playerShot = function(e, shot, sound){
 
-        if (PLAYER_TIME / 1000 <= 3) return;
+        if (tanksModel.objs.player.time / 1000 <= 3) return;
         var keyCode = e.keyCode;
         var x = tanksModel.getCoords(tanksModel.objs.player).x;
         var y = tanksModel.getCoords(tanksModel.objs.player).y;
@@ -114,10 +124,11 @@ function startModel() {
                 direction: tanksModel.objs.player.direction
             };
 
-            tanksModel.objs.bullet.push(bullet);
-            tanksController.addBullet(bullet, "bulletPlayer");
-
             if (sound) shot.play();
+
+            tanksModel.objs.bullet.push(bullet);
+            tanksController.addBullet(bullet, bullet.name);
+
 
             switch (tanksModel.objs.player.direction) {
                 case "top":{
@@ -138,8 +149,8 @@ function startModel() {
                 }
             }
 
-            PLAYER_SCORE = PLAYER_SCORE - 1;
-            tanksController.changeScore(PLAYER_SCORE);
+            tanksModel.objs.player.score--;
+            tanksController.changeScore(tanksModel.objs.player.score);
         }
     };
 
@@ -166,11 +177,6 @@ function startModel() {
                         break;
                     }
                 }
-
-                // коллизии
-
-
-
             }
             catch (e) {
                 // пуля была удалена во время движения
@@ -183,25 +189,82 @@ function startModel() {
         requestAnimationFrame(tanksModel.movingBullet);
     };
 
+    Model.prototype.shotEnemy = function () {
+
+        $.each(tanksModel.objs.enemy, function(index, value) {
+
+            if (value.time / 1000 >= ENEMY_SHOT_FREQUENCE){
+
+                value.time = 0;
+
+
+                try {
+                    var bullet = {
+                        type: "bullet",
+                        name: "bulletEnemy",
+                        id: "bullet" + uuidv4(),
+                        width: 5,
+                        height: 5,
+                        direction: tanksModel.objs.enemy.direction
+                    };
+
+                    tanksModel.objs.bullet.push(bullet);
+                    tanksController.addBullet(bullet, bullet.name);
+
+
+                    switch (tanksModel.objs.player.direction) {
+                        case "top":{
+                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], value.x + 17, value.y);
+                            break;
+                        }
+                        case "bottom":{
+                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], value.x + 16, value.y + 35);
+                            break;
+                        }
+                        case "left":{
+                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], x, value.y + 16);
+                            break;
+                        }
+                        case "right":{
+                            tanksModel.setCoords(tanksModel.objs.bullet[tanksModel.objs.bullet.length - 1], value.x + 35, value.y + 15);
+                            break;
+                        }
+                    }
+                }
+                catch (e) {
+                    // танк был убит во время выстрела
+                }
+            }
+            else{
+                var curentDate = new Date();
+                value.time += curentDate - value.startDate;
+                value.startDate = curentDate;
+            }
+        });
+
+        requestAnimationFrame(tanksModel.shotEnemy);
+    };
+
     Model.prototype.stopwatch = function () {
-        if (PLAYER_TIME == 0){
+        if (tanksModel.objs.player.time == 0){
             var sound = tanksController.startSound();
             if (sound != null) sound.play();
         }
-        else if (PLAYER_TIME/1000 >= 4){
+        else if (tanksModel.objs.player.time/1000 >= 4){
             // Игра началась + танков нет = игрок их убил = некст лвл
             if (tanksModel.objs.enemy.length == 0){
-                PLAYER_LEVEL++;
+                tanksModel.objs.player.level++;
+                tanksModel.objs.player.direction = 'top';
                 tanksModel.setCoords(tanksModel.objs.player, INITIAL_PLAYER_X, INITIAL_PLAYER_Y);
-                tanksController.changeLevel(PLAYER_LEVEL);
-                PLAYER_TIME = 0;
-                StartDate = new Date();
+                tanksController.changeLevel(tanksModel.objs.player.level);
+                tanksModel.objs.player.time = 0;
+                tanksModel.objs.player.startDate = new Date();
                 requestAnimationFrame(tanksModel.stopwatch);
                 return;
             }
         }
         // песенка прошла
-        else if (PLAYER_TIME/1000 >= 3.2){
+        else if (tanksModel.objs.player.time/1000 >= 3.2){
             // проверка на спавн противников
             if (tanksModel.objs.enemy.length == 0){
 
@@ -209,6 +272,8 @@ function startModel() {
                     x: 20,
                     y: 10,
                     hp: ENEMY_HP,
+                    time: 0,
+                    startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
                     width: 40,
@@ -220,6 +285,8 @@ function startModel() {
                     x: RIGHT_BORDER - 10 - 40,
                     y: 10,
                     hp: ENEMY_HP,
+                    time: 0,
+                    startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
                     width: 40,
@@ -231,6 +298,8 @@ function startModel() {
                     x: 10,
                     y:  BOTTOM_BORDER - 10 - 40,
                     hp: ENEMY_HP,
+                    time: 0,
+                    startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
                     width: 40,
@@ -242,6 +311,8 @@ function startModel() {
                     x: RIGHT_BORDER - 10 - 40,
                     y:  BOTTOM_BORDER - 10 - 40,
                     hp: ENEMY_HP,
+                    time: 0,
+                    startDate: new Date(),
                     id: "enemy" + uuidv4(),
                     type: "enemy",
                     width: 40,
@@ -264,30 +335,47 @@ function startModel() {
         }
 
         var curentDate = new Date();
-        PLAYER_TIME += curentDate - StartDate;
-        StartDate = curentDate;
+        tanksModel.objs.player.time += curentDate - tanksModel.objs.player.startDate;
+        tanksModel.objs.player.startDate = curentDate;
         requestAnimationFrame(tanksModel.stopwatch);
     };
 
     Model.prototype.checkScreenBordersTanks = function (obj, x, y) {
 
         if (obj.type == "player"){
+
+            var oldX = obj.x;
+            var oldY = obj.y;
+            var flagCollEnemy = false;
+
+            //стена
             if (!(x <= LEFT_BORDER || x + 40 >= RIGHT_BORDER)) {
                 obj.x = x;
             }
             if (!(y <= TOP_BORDER || y + 40 >= BOTTOM_BORDER)) {
                 obj.y = y;
             }
+
+            //После проверки со стеной чекаем на танк, если врезались вернем старые значения
+            $.each(tanksModel.objs.enemy, function(enemyIndex, enemyValue) {
+                if (checkCollision(obj, enemyValue)) flagCollEnemy = true;
+            });
+
+            //Врезались во врага - вернем старые координаты
+            if (flagCollEnemy) {
+                obj.x = oldX;
+                obj.y = oldY;
+            }
         }
         else if (obj.type == "bullet"){
-            if (!(x - 10  <= LEFT_BORDER || x - 10 >= RIGHT_BORDER)) {
+            if (!(x + 10  <= LEFT_BORDER || x - 10 >= RIGHT_BORDER)) {
                 obj.x = x;
             }
             else{
                 tanksModel.deleteBullet(obj);
                 return;
             }
-            if (!(y <= TOP_BORDER || y + 5 >= BOTTOM_BORDER)) {
+            if (!(y + 10 <= TOP_BORDER || y - 5 >= BOTTOM_BORDER)) {
                 obj.y = y;
             }
             else{
@@ -311,8 +399,8 @@ function startModel() {
                     if (enemyValue.hp == 0) {
                         //удаляем + очки
 
-                        PLAYER_SCORE += 50;
-                        tanksController.changeScore(PLAYER_SCORE);
+                        tanksModel.objs.player.score += 50;
+                        tanksController.changeScore(tanksModel.objs.player.score);
 
                         tanksModel.deleteEnemy(enemyValue);
                     }
