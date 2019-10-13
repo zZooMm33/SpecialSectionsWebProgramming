@@ -20,8 +20,6 @@ function startModel() {
     const ENEMY_HP = 1;
     const ENEMY_SHOT_FREQUENCE = 0.5; // каждые N секунд выстрел
 
-    var StartDate = new Date();
-
     var Model = function () {
         this.objs = {
             isGameOver: false,
@@ -29,6 +27,7 @@ function startModel() {
                 type: "player",
                 x: INITIAL_PLAYER_X,
                 y: INITIAL_PLAYER_Y,
+                speed: PLAYER_STEP,
 
                 time: 0,
                 startDate: new Date(),
@@ -85,26 +84,27 @@ function startModel() {
         var keyCode = e.keyCode;
         var x = tanksModel.getCoords(tanksModel.objs.player).x;
         var y = tanksModel.getCoords(tanksModel.objs.player).y;
+        var speed = tanksModel.objs.player.speed;
 
         switch (keyCode) {
             case 39: {
                 tanksModel.objs.player.direction = "right";
-                tanksModel.setCoords(tanksModel.objs.player, x + PLAYER_STEP);
+                tanksModel.setCoords(tanksModel.objs.player, x + speed);
                 break;
             }
             case 37: {
                 tanksModel.objs.player.direction = "left";
-                tanksModel.setCoords(tanksModel.objs.player, x - PLAYER_STEP);
+                tanksModel.setCoords(tanksModel.objs.player, x - speed);
                 break;
             }
             case 38: {
                 tanksModel.objs.player.direction = "top";
-                tanksModel.setCoords(tanksModel.objs.player,  null, y - PLAYER_STEP);
+                tanksModel.setCoords(tanksModel.objs.player,  null, y - speed);
                 break;
             }
             case 40: {
                 tanksModel.objs.player.direction = "bottom";
-                tanksModel.setCoords(tanksModel.objs.player,  null, y + PLAYER_STEP);
+                tanksModel.setCoords(tanksModel.objs.player,  null, y + speed);
                 break;
             }
 

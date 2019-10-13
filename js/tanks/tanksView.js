@@ -38,10 +38,6 @@ function startView() {
         div.setAttribute("id", bullet.id );
 
         this.game.appendChild(div);
-
-        //var bulletHTML = document.querySelector('#' + bullet.id);
-        //bulletHTML.style.left = 'calc(50% + ' + bullet.x + 'px)';
-        //bulletHTML.style.top = 'calc(70% + ' + bullet.y + 'px)';
     };
 
     View.prototype.newEnemy = function (enemy){
