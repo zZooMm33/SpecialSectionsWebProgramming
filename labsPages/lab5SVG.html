@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Танки</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="../assets/css/game/game.css">
+    <link rel="stylesheet" href="../assets/css/game/settings.css">
+    <link rel="stylesheet" href="../assets/css/game/player.css">
+    <link rel="stylesheet" href="../assets/css/game/enemy.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="mainScene">
+                <div class="row">
+
+                    <div class="col-6">
+                        <div class="game">
+                            <div class="player top x3-size-sprite"></div>
+                        </div>
+                    </div>
+
+                    <div class="col-6">
+                        <div class="settings">
+                            <h1>Настройки</h1>
+                            <button type="button" id="startGame" class="btn btn-success" onclick="startGame();">Start</button>
+                            <br>
+
+                            <p>
+                                <b>Звук</b>
+                            <p> <input name="soundsGame" type="radio" value="on" id="soundsGameOn" checked>Вкл</p>
+                            <p> <input name="soundsGame" type="radio" value="off" id="soundsGameOff">Выкл</p>
+                            </p>
+
+
+                            <p id="levelGame">Level: 1</p>
+                            <p id="numbLife"> Количество жизней: 3</p>
+                            <p id="scoreGame">Score: 0</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<audio class="death">
+    <source src="assets/sounds/tanks/Death.mp3" type="audio/mp3" />
+</audio>
+
+<audio class="shot">
+    <source src="../assets/sounds/tanks/Shot.mp3" type="audio/mp3" />
+</audio>
+
+<audio class="startGameSound">
+    <source src="../assets/sounds/tanks/StartGame.mp3" type="audio/mp3" />
+</audio>
+
+<audio class="hitEnemyTank">
+    <source src="../assets/sounds/tanks/HitAnEnemyTank.mp3" type="audio/mp3" />
+</audio>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script src="../js/tanks/tanksModel.js"></script>
+<script src="../js/tanks/tanksViewSVG.js"></script>
+<script src="../js/tanks/tanksController.js"></script>
+<script src="../js/startGame.js"></script>
+</body>
+</html>

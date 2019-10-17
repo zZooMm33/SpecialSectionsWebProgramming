@@ -12,7 +12,6 @@ function startController() {
 
     Controller.prototype.init = function() {
         this.tanksView.onKeyDownEvent = this.moving.bind(this);
-
         this.tanksView.onKeyUpEvent = this.shot.bind(this);
 
         this.tanksView.init();
