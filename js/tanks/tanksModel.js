@@ -13,7 +13,7 @@ function startModel() {
     const INITIAL_PLAYER_X = (RIGHT_BORDER - 20) / 2;
     const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 20) / 2;
 
-    const PLAYER_STEP = 6;
+    const PLAYER_STEP = 7;
     const BULLET_STEP = 15;
     const ENEMY_STEP = 5;
 

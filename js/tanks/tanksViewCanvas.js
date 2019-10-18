@@ -7,7 +7,10 @@ function startView() {
     var View = function() {
         // поля - объекты
         this.game = document.querySelector('.game');
-        this.player = document.querySelector('.player');
+        this.contex = this.game.getContext('2d');
+
+        this.game.width = this.game.offsetWidth;
+        this.game.height = this.game.offsetHeight;
 
         //звуки-музыка
         this.shotSound = document.querySelector('.shot');
@@ -33,31 +36,15 @@ function startView() {
     };
 
     View.prototype.newBullet = function (bullet, className){
-        var div = document.createElement("div");
-        div.setAttribute("class", className);
-        div.setAttribute("id", bullet.id );
 
-        this.game.appendChild(div);
     };
 
     View.prototype.newEnemy = function (enemy){
-        var div = document.createElement("div");
 
-        div.classList.add("enemy");
-        div.classList.add("x3-size-sprite");
-        div.classList.add(enemy.direction);
-
-        div.setAttribute("id", enemy.id );
-
-        div.style.left = enemy.x + 'px';
-        div.style.top = enemy.y + 'px';
-
-        this.game.appendChild(div);
     };
 
     View.prototype.deleteObject = function (object){
-        var objectHTML = document.querySelector('#' + object.id);
-        this.game.removeChild(objectHTML);
+
     };
 
     View.prototype.changeScore = function (score){
@@ -72,79 +59,103 @@ function startView() {
         document.querySelector('#numbLife').innerHTML = "Количество жизней: " + life;
 
         if (life == 0){
-            document.querySelector('.player').style.display = "none";
+            this.contex.clearRect(0, 0, this.game.width, this.game.height);
             alert("Game Over");
         }
     };
     View.prototype.render = function (objs) {
-        this.player.style.left = objs.player.x + 'px';
-        this.player.style.top = objs.player.y + 'px';
 
+        this.contex.clearRect(0, 0, this.game.width, this.game.height);
 
-        this.player.classList.remove("right", "left", "top", "bottom");
-        switch (objs.player.direction) {
-            case "right": {
-                this.player.classList.add("right");
-                break;
-            }
-            case "left": {
-                this.player.classList.add("left");
-                break;
-            }
-            case "top": {
-                this.player.classList.add("top");
-                break;
-            }
-            case "bottom": {
-                this.player.classList.add("bottom");
-                break;
-            }
-        }
-
+        tanksView.drawTank(objs.player.x , objs.player.y , 40, 40, "green", objs.player.direction);
 
         $.each(objs.bullet, function(index, value) {
 
             try {
-                var bullet = document.querySelector('#' + value.id);
-                bullet.style.left = value.x + 'px';
-                bullet.style.top = value.y + 'px';
+
+                tanksView.drawCircle(value.x , value.y, 2.5, 'black', value.direction);
             }
             catch (e) {
                 // пуля была удалена во время отрисовки
             }
         });
 
+
+        this.contex.fillStyle = "red";
         $.each(objs.enemy, function(index, value) {
 
             try {
-                var enemy = document.querySelector('#' + value.id);
-                enemy.style.left = value.x + 'px';
-                enemy.style.top = value.y + 'px';
-
-                enemy.classList.remove("right", "left", "top", "bottom");
-                switch (value.direction) {
-                    case "right": {
-                        enemy.classList.add("right");
-                        break;
-                    }
-                    case "left": {
-                        enemy.classList.add("left");
-                        break;
-                    }
-                    case "top": {
-                        enemy.classList.add("top");
-                        break;
-                    }
-                    case "bottom": {
-                        enemy.classList.add("bottom");
-                        break;
-                    }
-                }
+                tanksView.drawTank(value.x , value.y , 40, 40, "red", value.direction);
             }
             catch (e) {
-                // пуля была удалена во время отрисовки
+
             }
         });
+    };
+
+    View.prototype.drawTank = function (x, y, w, h, color, direction){
+        this.contex.fillStyle = color;
+
+        this.contex.fillRect(x, y, w, h);
+
+        this.contex.beginPath();
+        this.contex.lineWidth = 2;
+        this.contex.strokeStyle = 'black';
+
+        switch (direction) {
+            case "right": {
+                this.contex.moveTo(x + w, y + h / 2);
+                this.contex.lineTo(x + w / 2, y +  h/ 2);
+                break;
+            }
+            case "left": {
+                this.contex.moveTo(x, y + h / 2);
+                this.contex.lineTo(x + w / 2, y +  h/ 2);
+                break;
+            }
+            case "top": {
+                this.contex.moveTo(x + w / 2, y);
+                this.contex.lineTo(x + w / 2, y +  h/ 2);
+                break;
+            }
+            case "bottom": {
+                this.contex.moveTo(x + w / 2, y + h);
+                this.contex.lineTo(x + w / 2, y +  h/ 2);
+                break;
+            }
+        }
+
+        this.contex.stroke();
+    };
+
+    View.prototype.drawCircle = function (x, y, r, color, direction){
+
+        this.contex.beginPath();
+
+        switch (direction) {
+            case "right": {
+                this.contex.arc(x + 5, y + 2,  r, 0, 2*Math.PI, false);
+                break;
+            }
+            case "left": {
+                this.contex.arc(x + 1, y + 1, r, 0, 2*Math.PI, false);
+                break;
+            }
+            case "top": {
+                this.contex.arc(x + 3, y, r, 0, 2*Math.PI, false);
+                break;
+            }
+            case "bottom": {
+                this.contex.arc(x + 3, y + 9, r, 0, 2*Math.PI, false);
+                break;
+            }
+        }
+
+        this.contex.fillStyle = color;
+        this.contex.fill();
+        this.contex.lineWidth = 1;
+        this.contex.strokeStyle = color;
+        this.contex.stroke();
     };
 
     tanksView = new View();
