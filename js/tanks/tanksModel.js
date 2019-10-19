@@ -6,9 +6,9 @@ Tanks model
 
 function startModel() {
     const LEFT_BORDER = 0;
-    const RIGHT_BORDER = document.querySelector('.game').offsetWidth;
+    const RIGHT_BORDER = 400;
     const TOP_BORDER = 0;
-    const BOTTOM_BORDER = document.querySelector('.game').offsetHeight;
+    const BOTTOM_BORDER = 400;
 
     const INITIAL_PLAYER_X = (RIGHT_BORDER - 20) / 2;
     const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 20) / 2;
