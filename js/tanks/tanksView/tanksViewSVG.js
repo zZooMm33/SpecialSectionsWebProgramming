@@ -5,6 +5,23 @@ Tanks view
 */
 function startView() {
     var View = function() {
+        //создаем игровове поле
+        var game_window = document.querySelector('#game_window');
+
+        //var game = document.createElement("svg");
+        var game = SVG.create('svg');
+
+        game.setAttribute("class", "game");
+        game.setAttribute("width", 400);
+        game.setAttribute("height", 400);
+
+        var rectPlayer = SVG.create('rect', { x: 0, y: 0, width: 40, height: 40, fill: 'green', class: "player top x3-size-sprite"});
+        var linePlayerDirection = SVG.create('line', { x1: 0, y1: 0, x2: 0, y2: 0, stroke: 'black', class: "playerDirection"});
+
+        game.appendChild(rectPlayer);
+        game.appendChild(linePlayerDirection);
+        game_window.appendChild(game);
+
         // поля - объекты
         this.game = document.querySelector('.game');
         this.player = document.querySelector('.player');
@@ -41,9 +58,9 @@ function startView() {
     View.prototype.newEnemy = function (enemy){
 
         var rect = SVG.create('rect', { x: enemy.x, y: enemy.y, width: 40, height: 40, fill: 'red', id: enemy.id});
-        var rectDirection = SVG.create('line', { x1: 0, y1: 0, x2: 40, y2: 40, stroke: 'black', id: "line" + enemy.id});
+        var lineDirection = SVG.create('line', { x1: 0, y1: 0, x2: 40, y2: 40, stroke: 'black', id: "line" + enemy.id});
         this.game.appendChild(rect);
-        this.game.appendChild(rectDirection);
+        this.game.appendChild(lineDirection);
     };
 
     View.prototype.deleteObject = function (object){

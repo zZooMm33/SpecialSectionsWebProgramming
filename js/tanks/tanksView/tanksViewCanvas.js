@@ -5,6 +5,14 @@ Tanks view
 */
 function startView() {
     var View = function() {
+        //создаем игровове поле
+        var game_window = document.querySelector('#game_window');
+
+        var game = document.createElement("canvas");
+        game.setAttribute("class", "game");
+
+        game_window.appendChild(game);
+
         // поля - объекты
         this.game = document.querySelector('.game');
         this.contex = this.game.getContext('2d');

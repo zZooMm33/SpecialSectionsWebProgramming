@@ -5,6 +5,19 @@ Tanks view
 */
 function startView() {
     var View = function() {
+        //создаем игровове поле
+        var game_window = document.querySelector('#game_window');
+
+        var game = document.createElement("div");
+        game.setAttribute("class", "game");
+
+
+        var player = document.createElement("div");
+        player.setAttribute("class", "player top x3-size-sprite");
+
+        game.appendChild(player);
+        game_window.appendChild(game);
+
         // поля - объекты
         this.game = document.querySelector('.game');
         this.player = document.querySelector('.player');
