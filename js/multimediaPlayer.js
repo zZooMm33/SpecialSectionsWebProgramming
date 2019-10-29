@@ -30,11 +30,12 @@ function checkFormatFile(inputType, id) {
 
             var type = file.type; //тип
             if (type.indexOf("audio") !== -1 || type.indexOf("video") !== -1){
-                var src = alert(document.getElementById(id).value);
+                var src = document.getElementById(id).value;
                 var ext = parts.pop(); //расширение
-
+                var id = uuidv4();
 
                 // добавить в плэйлист + в MultimediaPlayer
+                addRowInTable("playlist-table", src, ext, id);
 
                 document.getElementById("success").innerHTML="Файл успешно добавлен !";
                 show("success");

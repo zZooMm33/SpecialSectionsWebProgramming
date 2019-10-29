@@ -32,8 +32,18 @@
 
                     <button id="buttonPlaylist" type="button" class="btn btn-info mt-2" OnClick="toggle('divPlaylist');">Список воспроизведения</button>
                     <div id="divPlaylist">
-                        <table>
+                        <table id="playlist-table" class="mt-4">
+                            <thead>
+                            <tr>
+                                <th id="col-src">Путь</th>
+                                <th id="col-type">Тип</th>
+                                <th id="col-play"></th>
+                                <th id="col-delete"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
 
+                            </tbody>
                         </table>
                     </div>
                 </div>
