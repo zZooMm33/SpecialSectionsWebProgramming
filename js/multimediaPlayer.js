@@ -11,6 +11,10 @@ var MultimediaPlayer = {
     fileFormat: ""
 };
 
+function play(idButton) {
+    
+}
+
 function checkFormatFile(inputType, id) {
 
     hide("error");
@@ -31,11 +35,10 @@ function checkFormatFile(inputType, id) {
             var type = file.type; //тип
             if (type.indexOf("audio") !== -1 || type.indexOf("video") !== -1){
                 var src = document.getElementById(id).value;
-                var ext = parts.pop(); //расширение
                 var id = uuidv4();
 
                 // добавить в плэйлист + в MultimediaPlayer
-                addRowInTable("playlist-table", src, ext, id);
+                addRowInTable("playlist-table", src, type, id);
 
                 document.getElementById("success").innerHTML="Файл успешно добавлен !";
                 show("success");
@@ -52,9 +55,10 @@ function checkFormatFile(inputType, id) {
     }
     else {
 
-        var fileSrc = document.getElementById(id).value;
-        var ext = ( parts = fileSrc.split("/").pop().split(".") ).length > 1 ? parts.pop() : "";
+        var src = document.getElementById(id).value;
+        var ext = ( parts = src.split("/").pop().split(".") ).length > 1 ? parts.pop() : "";
         var type = "";
+        var id = uuidv4();
 
         if (ext===""){
             document.getElementById("error").innerHTML="Не корректный путь к файлу !";
@@ -64,7 +68,8 @@ function checkFormatFile(inputType, id) {
             $.each(AUDIO_FORMAT, function(index, value) {
                 if (value === ext){
                     // добавить в плэйлист + в MultimediaPlayer
-                    type = "audio";
+                    type = "audio/" + ext;
+                    addRowInTable("playlist-table", src, type, id);
 
                     document.getElementById("success").innerHTML="Файл успешно добавлен !";
                     show("success");
@@ -75,7 +80,8 @@ function checkFormatFile(inputType, id) {
             $.each(VIDEO_FORMAT, function(index, value) {
                 if (value === ext){
                     // добавить в плэйлист + в MultimediaPlayer
-                    type = "video";
+                    type = "video/" + ext;
+                    addRowInTable("playlist-table", src, type, id);
 
                     document.getElementById("success").innerHTML="Файл успешно добавлен !";
                     show("success");

@@ -6,3 +6,38 @@
     height: 50%;
     width: 50%;
 }
+
+table{
+    padding: 5px;
+    border: 1px solid grey;
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+td{
+    padding: 5px;
+    border: 1px solid grey;
+    font-size: 16px;
+}
+th {
+    color: #ffffff;
+    font-weight: bold;
+    background: #00bf80;
+    font-size: 18px;
+
+    padding: 5px;
+    border: 1px solid grey;
+}
+#col-src{
+    width: 70%;
+}
+#col-type{
+    width: 10%;
+}
+#col-play{
+    width: 10%;
+}
+#col-delete{
+    width: 10%;
+}

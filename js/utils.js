@@ -43,18 +43,10 @@ function addRowInTable(tableId, src, type, id) {
     // Наполняем ячейки
     td1.innerHTML = src;
     td2.innerHTML = type;
-    td3.innerHTML = "<button type=\"button\" id='play" + id + "' class=\"btn btn-outline-success\" OnClick=\"deleteRow(this.id);\">Enter'у</button>";
-    td4.innerHTML = "<button type=\"button\" id='deleteRow" + id + "' class=\"btn btn-outline-danger\" OnClick=\"deleteRow(this.id);\">Удалить</button>";
+    td3.innerHTML = "<button type=\"button\" id='play" + id + "' class=\"btn btn-success\" OnClick=\"play(this.id);\">Enter'у</button>";
+    td4.innerHTML = "<button type=\"button\" id='deleteRow" + id + "' class=\"btn btn-danger\" OnClick=\"deleteRow(this.id);\">Удалить</button>";
 }
 
-function clearTable(nameTable) {
-    var tableHeaderRowCount = 1;
-    var table = document.getElementById(nameTable);
-    var rowCount = table.rows.length;
-    for (var i = tableHeaderRowCount; i < rowCount; i++) {
-        table.deleteRow(tableHeaderRowCount);
-    }
-}
 function deleteRow(idButton) {
     var idRow = "row" + idButton.replace("deleteRow", "");
     var row = document.getElementById(idRow);
