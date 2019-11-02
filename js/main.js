@@ -5,6 +5,7 @@ window.onload = function() {
     hide("divPlaylist");
     hide("divAudio");
     hide("divVideo");
+    hide('divControls');
 };
 
 document.getElementById("audio").onended = function(){

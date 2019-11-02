@@ -29,12 +29,23 @@
                         <br>
                     </div>
 
-                    <button type="button" id='playAll' class="btn btn-success mt-4" OnClick="play();">Воспроизвести все</button>
+                    <div class="mt-4" id="divControls">
+                        <button type="button" class="btn btn-secondary" onclick="playPrev();">Назад</button>
+                        <button type="button" class="btn btn-secondary" onclick="rewind(30);">Назад на 30 сек</button>
+                        <button type="button" class="btn btn-secondary" onclick="rewind(10);">Назад на 10 сек</button>
+                        <button type="button" class="btn btn-secondary" onclick="play();">Play</button>
+                        <button type="button" class="btn btn-secondary" onclick="pause();">Pause</button>
+                        <button type="button" class="btn btn-secondary" onclick="fastForward(10);">Вперед на 10 сек</button>
+                        <button type="button" class="btn btn-secondary" onclick="fastForward(30);">Вперед на 30 сек</button>
+                        <button type="button" class="btn btn-secondary" onclick="playNext();">Вперед</button>
+                    </div>
+
+                    <button type="button" id='playAll' class="btn btn-success mt-4" OnClick="playAll();">Воспроизвести все</button>
                     <br>
 
                     <button id="buttonOpenFile" type="button" class="btn btn-info mt-2" OnClick="toggle('divOpenFile');">Добавить файл одним из способов</button>
                     <div id="divOpenFile" class="mt-4">
-                        <input type="text" placeholder="Введите путь к файлу" id="openFileText" size="40">
+                        <input type="text" placeholder="Введите путь к файлу" id="openFileText" size="40" value="/Users/zzoomm/Music/zZooMm/Boyce_Avenue_-_Rise_(iPleer.fm).mp3">
                         <button type="button" class="btn btn-success ml-2" OnClick="checkFormatFile('text', 'openFileText');">Добавить файл (путь)</button>
                         <br>
                         <input class="mt-2" id="openFileDialog" type="file">
@@ -70,6 +81,7 @@
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/multimediaPlayer.js"></script>
+    <script src="js/videoAndAudioControls.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 </body>

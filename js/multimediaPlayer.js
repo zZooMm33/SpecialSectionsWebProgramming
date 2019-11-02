@@ -3,7 +3,12 @@
 const AUDIO_FORMAT = ["mp3", "wav"];
 const VIDEO_FORMAT = ["mkv", "mp4"];
 
-function play() {
+var currentPlay = {
+    src: "",
+    type: ""
+};
+
+function playAll() {
     var table = document.getElementById("playlist-table");
 
     // 1 потому что шапка табл
@@ -113,6 +118,8 @@ function playElement(src, type) {
 
         hide("divVideo");
         show("divAudio");
+
+        document.getElementById('video').src = "";
     } else {
         var video = document.getElementById('video');
         video.src = src;
@@ -120,39 +127,11 @@ function playElement(src, type) {
 
         hide("divAudio");
         show("divVideo");
-    }
-}
 
-function playNext(element) {
-    var table = document.getElementById("playlist-table");
-    var playNext = false;
-
-    // 1 потому что шапка табл
-    if (table.getElementsByTagName("tr").length === 1){
-        hide("success");
-        document.getElementById("error").innerHTML="Playlist пуст !";
-        show("error");
-        return;
+        document.getElementById("audio").src = "";
     }
 
-    for (var i = 0, row; row = table.rows[i]; i++) {
-
-        if (playNext){
-            playElement(row.cells[0].innerHTML,row.cells[1].innerHTML);
-            return;
-        }
-
-        if (row.cells[0].innerHTML.indexOf(element.src) !== -1){
-            playNext = true;
-            element.src = "";
-        }
-    }
-
-    hide("divAudio");
-    hide("divVideo");
-
-    document.getElementById("audio").src = "";
-    document.getElementById('video').src = "";
-    document.getElementById("error").innerHTML="Playlist закончился !";
-    show("error");
+    currentPlay.src = src;
+    currentPlay.type = type;
+    show('divControls');
 }

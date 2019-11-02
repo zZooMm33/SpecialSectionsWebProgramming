@@ -61,8 +61,7 @@ function deleteRow(idButton) {
     var idRow = "row" + idButton.replace("deleteRow", "");
     var row = document.getElementById(idRow);
 
-    if ((row.cells[0].innerHTML.indexOf(document.getElementById('video').src) !== -1 && document.getElementById("divVideo").style.display !== 'none') ||
-        (row.cells[0].innerHTML.indexOf(document.getElementById('audio').src) !== -1) && document.getElementById("divAudio").style.display !== 'none'){
+    if (row.cells[0].innerHTML.indexOf(currentPlay.src) !== -1){
 
         document.getElementById("error").innerHTML="Ошибка при удалении !";
         show("error");
