@@ -29,6 +29,12 @@ th {
     padding: 5px;
     border: 1px solid grey;
 }
+
+#video{
+    height: 300px;
+    width: 500px;
+}
+
 #col-src{
     width: 70%;
 }

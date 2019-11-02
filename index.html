@@ -19,13 +19,26 @@
                     <div id="error" class="alert alert-danger" role="alert" onclick="toggle('error');"></div>
                     <div id="success" class="alert alert-success" role="alert" onclick="toggle('success');"></div>
 
-                    <button id="buttonOpenFile" type="button" class="btn btn-info" OnClick="toggle('divOpenFile');">Открыть файл одним из способов</button>
+                    <div class="mt-4" id="divVideo">
+                        <video controls autoplay src="" id="video"></video>
+                        <br>
+                    </div>
+
+                    <div class="mt-4" id="divAudio">
+                        <audio controls autoplay src="" id="audio" ></audio>
+                        <br>
+                    </div>
+
+                    <button type="button" id='playAll' class="btn btn-success mt-4" OnClick="play();">Воспроизвести все</button>
+                    <br>
+
+                    <button id="buttonOpenFile" type="button" class="btn btn-info mt-2" OnClick="toggle('divOpenFile');">Добавить файл одним из способов</button>
                     <div id="divOpenFile" class="mt-4">
                         <input type="text" placeholder="Введите путь к файлу" id="openFileText" size="40">
-                        <button type="button" class="btn btn-success ml-2" OnClick="checkFormatFile('text', 'openFileText');">Открыть файл (путь)</button>
+                        <button type="button" class="btn btn-success ml-2" OnClick="checkFormatFile('text', 'openFileText');">Добавить файл (путь)</button>
                         <br>
                         <input class="mt-2" id="openFileDialog" type="file">
-                        <button type="button" class="btn btn-success ml-2" OnClick="checkFormatFile('file', 'openFileDialog');">Открыть файл (диалоговое окно)</button>
+                        <button type="button" class="btn btn-success ml-2" OnClick="checkFormatFile('file', 'openFileDialog');">Добавить файл (диалоговое окно)</button>
                     </div>
 
                     <br>
@@ -37,7 +50,6 @@
                             <tr>
                                 <th id="col-src">Путь</th>
                                 <th id="col-type">Тип</th>
-                                <th id="col-play"></th>
                                 <th id="col-delete"></th>
                             </tr>
                             </thead>
