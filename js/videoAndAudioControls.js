@@ -1,20 +1,20 @@
-function rewind(value) {
+function volume(value) {
     if (currentPlay.type.indexOf("audio") !== -1) {
-        document.getElementById("audio").currentTime -= value;
+        document.getElementById("audio").volume += value;
 
 
     } else {
-        document.getElementById("video").currentTime -=value;
+        document.getElementById("video").volume +=value;
     }
 }
 
-function fastForward(value) {
+function rewind(value) {
     if (currentPlay.type.indexOf("audio") !== -1) {
         document.getElementById("audio").currentTime += value;
 
 
     } else {
-        document.getElementById('video').currentTime += value;
+        document.getElementById("video").currentTime +=value;
     }
 }
 
@@ -103,5 +103,37 @@ function playPrev() {
         }
 
         prevRow = row;
+    }
+}
+
+function hotkeys(event) {
+
+    if(currentPlay.src === "") return;
+
+    var x = event.keyCode;
+
+    //p
+    if (x === 80) {
+        play();
+    }
+    //s
+    else if (x === 83) {
+        pause();
+    }
+    //l
+    else if (x === 37) {
+        rewind(-10);
+    }
+    //r
+    else if (x === 39) {
+        rewind(10);
+    }
+    //up
+    else if (x === 38) {
+        //volume(0.1);
+    }
+    //d
+    else if (x === 40) {
+        //volume(-0.1);
     }
 }

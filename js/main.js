@@ -6,12 +6,14 @@ window.onload = function() {
     hide("divAudio");
     hide("divVideo");
     hide('divControls');
+
+    window.addEventListener("keyup", hotkeys, false);
 };
 
 document.getElementById("audio").onended = function(){
-    playNext(this);
+    playNext();
 };
 
 document.getElementById("video").onended = function(){
-    playNext(this);
+    playNext();
 };
