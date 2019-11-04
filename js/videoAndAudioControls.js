@@ -1,10 +1,18 @@
 function volume(value) {
     if (currentPlay.type.indexOf("audio") !== -1) {
         document.getElementById("audio").volume += value;
-
-
+        document.getElementById("volume").value =  document.getElementById("audio").volume;
     } else {
-        document.getElementById("video").volume +=value;
+        document.getElementById("video").volume += value;
+        document.getElementById("volume").value =  document.getElementById("video").volume;
+    }
+}
+
+function setVolume(value) {
+    if (currentPlay.type.indexOf("audio") !== -1) {
+        document.getElementById("audio").volume = parseFloat(value);
+    } else {
+        document.getElementById("video").volume = parseFloat(value);
     }
 }
 
@@ -128,12 +136,12 @@ function hotkeys(event) {
     else if (x === 39) {
         rewind(10);
     }
-    //up
-    else if (x === 38) {
-        //volume(0.1);
+    //up - 38 / +
+    else if (x === 187) {
+        volume(0.1);
     }
-    //d
-    else if (x === 40) {
-        //volume(-0.1);
+    //d - 40/ - 189
+    else if (x === 189) {
+        volume(-0.1);
     }
 }

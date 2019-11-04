@@ -38,6 +38,9 @@
                         <button type="button" class="btn btn-secondary" onclick="rewind(10);">Вперед на 10 сек</button>
                         <button type="button" class="btn btn-secondary" onclick="rewind(30);">Вперед на 30 сек</button>
                         <button type="button" class="btn btn-secondary" onclick="playNext();">Вперед</button>
+                        <br>
+                        <br>
+                        Громкость <input id="volume" type="range" min="0" max="1" step="0.01" value="1" onchange="setVolume(this.value);">
                     </div>
 
                     <button type="button" id='playAll' class="btn btn-success mt-4" OnClick="playAll();">Воспроизвести все</button>
