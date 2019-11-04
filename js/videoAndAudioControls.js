@@ -16,6 +16,14 @@ function setVolume(value) {
     }
 }
 
+function setTime(value) {
+    if (currentPlay.type.indexOf("audio") !== -1) {
+        document.getElementById("audio").currentTime = parseInt(value);
+    } else {
+        document.getElementById("video").currentTime = parseInt(value);
+    }
+}
+
 function rewind(value) {
     if (currentPlay.type.indexOf("audio") !== -1) {
         document.getElementById("audio").currentTime += value;
@@ -23,6 +31,30 @@ function rewind(value) {
 
     } else {
         document.getElementById("video").currentTime +=value;
+    }
+}
+
+function rewind30(value) {
+    if (currentPlay.type.indexOf("audio") !== -1) {
+        var currentTime = document.getElementById("audio").currentTime;
+
+        var newTime = parseInt((currentTime / 30), 10) * 30;
+
+        if (value === -1) {
+            if (parseInt(currentTime) === newTime) document.getElementById("audio").currentTime = newTime - 30;
+            else document.getElementById("audio").currentTime = newTime;
+        }
+        else document.getElementById("audio").currentTime = newTime + 30;
+    } else {
+        var currentTime = document.getElementById("video").currentTime;
+
+        var newTime = parseInt((currentTime / 30), 10) * 30;
+
+        if (value === -1) {
+            if (parseInt(currentTime) === newTime) document.getElementById("video").currentTime = newTime - 30;
+            else document.getElementById("video").currentTime = newTime;
+        }
+        else document.getElementById("video").currentTime = newTime + 30;
     }
 }
 

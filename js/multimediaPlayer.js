@@ -42,7 +42,7 @@ function checkFormatFile(inputType, id) {
             var type = file.type; //тип
             if (type.indexOf("audio") !== -1 || type.indexOf("video") !== -1){
 
-                var src =URL.createObjectURL(file);
+                var src = URL.createObjectURL(file);
                 //var src = document.getElementById(id).value;
                 var id = uuidv4();
 
@@ -84,6 +84,7 @@ function checkFormatFile(inputType, id) {
                 if (value === ext){
                     // добавить в плэйлист + в MultimediaPlayer
                     type = "audio/" + ext;
+
                     addRowInTable("playlist-table", src, type, id);
 
                     document.getElementById("success").innerHTML="Файл успешно добавлен !";
@@ -115,6 +116,11 @@ function checkFormatFile(inputType, id) {
 function playElement(src, type) {
     if (type.indexOf("audio") !== -1) {
         document.getElementById("audio").src = src;
+        document.getElementById("audio").onloadeddata = function(){
+            var max = document.getElementById('audio').duration;
+            document.getElementById('timeline').setAttribute('max', max);
+        };
+
 
         hide("divVideo");
         show("divAudio");
@@ -123,6 +129,12 @@ function playElement(src, type) {
     } else {
         var video = document.getElementById('video');
         video.src = src;
+        var max = document.getElementById('video').duration;
+        document.getElementById('timeline').setAttribute('max', max);
+        document.getElementById("video").onloadeddata = function(){
+            var max = document.getElementById('video').duration;
+            document.getElementById('timeline').setAttribute('max', max);
+        };
         video.load();
 
         hide("divAudio");
