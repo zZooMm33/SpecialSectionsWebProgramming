@@ -15,6 +15,11 @@ input.number{
     text-align: right;
 }
 
+input.number-table{
+    text-align: right;
+    width: 100%;
+}
+
 input#address, input#phone_number{
     width: 100%;
 }
