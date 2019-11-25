@@ -2,9 +2,21 @@
     text-align: center;
 }
 
-.sayonara-img{
-    height: 50%;
-    width: 50%;
+h1{
+    text-align: center;
+}
+
+img{
+    width: 100%;
+    height: 60%;
+}
+
+input.number{
+    text-align: right;
+}
+
+input#address, input#phone_number{
+    width: 100%;
 }
 
 table{
@@ -28,22 +40,4 @@ th {
 
     padding: 5px;
     border: 1px solid grey;
-}
-
-#video{
-    height: 300px;
-    width: 500px;
-}
-
-#col-src{
-    width: 70%;
-}
-#col-type{
-    width: 10%;
-}
-#col-play{
-    width: 10%;
-}
-#col-delete{
-    width: 10%;
 }
