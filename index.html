@@ -19,8 +19,8 @@
                     <h3 class="center name">Пицца ZooM 1</h3>
                     <img class="mb-4" src="img/p1.jpg" alt="p1">
 
-                    <p>Цена: <span class="price">500</span> руб</p>
-                    <p>Количество: <input class="number" type="number" value="1"> шт.</p>
+                    <p><b>Цена:</b> <span class="price">300</span> руб</p>
+                    <p><label><b>Количество:</b> <input class="number" type="number" value="1"> шт.</label></p>
                     <button type="button" class="btn btn-primary" onclick="addPizza(this);">Добавить в корзину</button>
                     <a href="#delivery"><button type="button" class="btn btn-success">Перейти к заказу</button></a>
                 </div>
@@ -31,8 +31,8 @@
                     <h3 class="center name">Пицца ZooM 2</h3>
                     <img class="mb-4" src="img/p1.jpg" alt="p1">
 
-                    <p>Цена: <span class="price">300</span> руб</p>
-                    <p>Количество: <input class="number" type="number" value="1"> шт.</p>
+                    <p><b>Цена:</b> <span class="price">300</span> руб</p>
+                    <p><label><b>Количество:</b> <input class="number" type="number" value="1"> шт.</label></p>
                     <button type="button" class="btn btn-primary" onclick="addPizza(this);">Добавить в корзину</button>
                     <a href="#delivery"><button type="button" class="btn btn-success">Перейти к заказу</button></a>
                 </div>
@@ -43,8 +43,8 @@
                     <h3 class="center name">Пицца ZooM 3</h3>
                     <img class="mb-4" src="img/p1.jpg" alt="p1">
 
-                    <p>Цена: <span class="price">200</span> руб</p>
-                    <p>Количество: <input class="number" type="number" value="1"> шт.</p>
+                    <p><b>Цена:</b> <span class="price">300</span> руб</p>
+                    <p><label><b>Количество:</b> <input class="number" type="number" value="1"> шт.</label></p>
                     <button type="button" class="btn btn-primary" onclick="addPizza(this);">Добавить в корзину</button>
                     <a href="#delivery"><button type="button" class="btn btn-success">Перейти к заказу</button></a>
                 </div>
@@ -55,8 +55,8 @@
                     <h3 class="center name">Пицца ZooM 4</h3>
                     <img class="mb-4" src="img/p1.jpg" alt="p1">
 
-                    <p>Цена: <span class="price">900</span> руб</p>
-                    <p>Количество: <input class="number" type="number" value="1"> шт.</p>
+                    <p><b>Цена:</b> <span class="price">300</span> руб</p>
+                    <p><label><b>Количество:</b> <input class="number" type="number" value="1"> шт.</label></p>
                     <button type="button" class="btn btn-primary" onclick="addPizza(this);">Добавить в корзину</button>
                     <a href="#delivery"><button type="button" class="btn btn-success">Перейти к заказу</button></a>
                 </div>
@@ -67,8 +67,8 @@
                     <h3 class="center name">Пицца ZooM 5</h3>
                     <img class="mb-4" src="img/p1.jpg" alt="p1">
 
-                    <p>Цена: <span class="price">500</span> руб</p>
-                    <p>Количество: <input class="number" type="number" value="1"> шт.</p>
+                    <p><b>Цена:</b> <span class="price">300</span> руб</p>
+                    <p><label><b>Количество:</b> <input class="number" type="number" value="1"> шт.</label></p>
                     <button type="button" class="btn btn-primary" onclick="addPizza(this);">Добавить в корзину</button>
                     <a href="#delivery"><button type="button" class="btn btn-success">Перейти к заказу</button></a>
                 </div>
@@ -76,17 +76,18 @@
         </div>
     </div>
 
+
     <h1 class="mt-4" id="delivery">Доставка</h1>
     <div class="container">
         <div class="row">
             <div class="col-12">
-                <p>Корзина</p>
+                <p><b>Корзина</b></p>
                 <table id="table-pizza" class="mt-4 center">
                     <thead>
                     <tr>
                         <th id="col-name">Название</th>
-                        <th id="col-number">Количество</th>
-                        <th id="col-price">Цена</th>
+                        <th id="col-number">Количество (шт)</th>
+                        <th id="col-price">Цена(руб)</th>
                         <th id="col-delete"></th>
                     </tr>
                     </thead>
@@ -94,18 +95,18 @@
 
                     </tbody>
                 </table>
-                <p>Адрес: <input id="address" type="text"></p>
-                <p>Номер телефона: <input id="phone_number" type="text"></p>
-                <button type="button" class="btn btn-primary">Заказать</button>
+                <br>
+                <p><label><b>Адрес:</b> <input id="address" type="text" required placeholder="ул. Садовая, дом 123, квартира 123"></label></p>
+                <p><label><b>Номер телефона:</b> <input id="phone_number" type="text" required placeholder="+7 (123) 456-78-91"></label></p>
+                <button type="button" class="btn btn-primary" onclick="order();">Заказать</button>
             </div>
         </div>
     </div>
 
-
+    <br>
 
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-
     <script src="js/main.js"></script>
     <script src="js/utils.js"></script>
 </body>
