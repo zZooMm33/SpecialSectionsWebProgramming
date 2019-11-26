@@ -24,6 +24,10 @@ input#address, input#phone_number, label{
     width: 100%;
 }
 
+input{
+    border-color: black;
+}
+
 table{
     padding: 5px;
     border: 1px solid black;
