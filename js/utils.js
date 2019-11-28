@@ -37,6 +37,8 @@ function addRowInTable(tableId, name, number, price) {
     var td3 = document.createElement("TD");
     var td4 = document.createElement("TD");
 
+    td1.setAttribute('scope', 'col')
+
     row.appendChild(td1);
     row.appendChild(td2);
     row.appendChild(td3);
