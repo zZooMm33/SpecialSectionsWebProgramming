@@ -5,16 +5,8 @@ Tanks view
 */
 function startView() {
     var View = function() {
-        //создаем игровове поле
-        var game_window = document.querySelector('#game_window');
-
-        var game = document.createElement("canvas");
-        game.setAttribute("class", "game");
-
-        game_window.appendChild(game);
-
         // поля - объекты
-        this.game = document.querySelector('.game');
+        this.game = document.querySelector('#game_window');
         this.contex = this.game.getContext('2d');
 
         this.game.width = this.game.offsetWidth;
@@ -56,11 +48,11 @@ function startView() {
     };
 
     View.prototype.changeScore = function (score){
-        document.querySelector('#scoreGame').innerHTML = "Score: " + score;
+        document.querySelector('#scoreGame').innerHTML = "Количество очков: " + score;
     };
 
     View.prototype.changeLevel = function (level){
-        document.querySelector('#levelGame').innerHTML = "Level: " + level;
+        document.querySelector('#levelGame').innerHTML = "Уровень: " + level;
     };
 
     View.prototype.changeLife = function (life){
@@ -75,25 +67,23 @@ function startView() {
 
         this.contex.clearRect(0, 0, this.game.width, this.game.height);
 
-        tanksView.drawTank(objs.player.x , objs.player.y , 40, 40, "player", objs.player.direction);
+        tanksView.drawTank(objs.player.x , objs.player.y , objs.player.width, objs.player.height, "player", objs.player.direction);
 
         $.each(objs.bullet, function(index, value) {
 
             try {
 
-                tanksView.drawCircle(value.x , value.y, 2.5, 'black', value.direction);
+                tanksView.drawCircle(value.x , value.y, value.height, 'black', value.direction);
             }
             catch (e) {
                 // пуля была удалена во время отрисовки
             }
         });
 
-
-        this.contex.fillStyle = "red";
         $.each(objs.enemy, function(index, value) {
 
             try {
-                tanksView.drawTank(value.x , value.y , 40, 40, "enemy", value.direction);
+                tanksView.drawTank(value.x , value.y , objs.player.width, objs.player.height, "enemy", value.direction);
             }
             catch (e) {
 

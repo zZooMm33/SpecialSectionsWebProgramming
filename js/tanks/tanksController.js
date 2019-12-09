@@ -56,14 +56,12 @@ function startController() {
     };
 
     Controller.prototype.startSound = function(){
-
         if (this.tanksView.checkSound()){
             return this.tanksView.startGameSound;
         }
         else {
             return null;
         }
-
     };
 
     Controller.prototype.hitEnemyTankSound = function(){

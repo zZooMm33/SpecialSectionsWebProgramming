@@ -4,11 +4,22 @@ Tanks model
 
 */
 
-function startModel() {
+function startModel(size) {
+
+    let RIGHT_BORDER;
+    let BOTTOM_BORDER;
     const LEFT_BORDER = 0;
-    const RIGHT_BORDER = 400;
     const TOP_BORDER = 0;
-    const BOTTOM_BORDER = 400;
+
+    if (size.indexOf("big") !== -1){
+        RIGHT_BORDER = 600;
+        BOTTOM_BORDER = 600;
+    }
+    else{
+        RIGHT_BORDER = 400;
+        BOTTOM_BORDER = 400;
+    }
+
 
     const INITIAL_PLAYER_X = (RIGHT_BORDER - 20) / 2;
     const INITIAL_PLAYER_Y = (BOTTOM_BORDER - 20) / 2;
@@ -19,6 +30,8 @@ function startModel() {
 
     const ENEMY_HP = 1;
     const ENEMY_SHOT_FREQUENCE = 0.5; // каждые N секунд выстрел
+
+    const BULLET_SIZE = 4;
 
     var Model = function () {
         this.objs = {
@@ -125,8 +138,8 @@ function startModel() {
                 type: "bullet",
                 name: "bulletPlayer",
                 id: "bullet" + uuidv4(),
-                width: 5,
-                height: 5,
+                width: BULLET_SIZE,
+                height: BULLET_SIZE,
                 speed: BULLET_STEP,
                 direction: tanksModel.objs.player.direction
             };
@@ -236,8 +249,8 @@ function startModel() {
                         type: "bullet",
                         name: "bulletEnemy",
                         id: "bullet" + uuidv4(),
-                        width: 5,
-                        height: 5,
+                        width: BULLET_SIZE,
+                        height: BULLET_SIZE,
                         speed: BULLET_STEP,
                         direction: value.direction
                     };
