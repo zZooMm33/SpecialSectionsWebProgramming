@@ -75,7 +75,7 @@ function startView() {
 
         this.contex.clearRect(0, 0, this.game.width, this.game.height);
 
-        tanksView.drawTank(objs.player.x , objs.player.y , 40, 40, "green", objs.player.direction);
+        tanksView.drawTank(objs.player.x , objs.player.y , 40, 40, "player", objs.player.direction);
 
         $.each(objs.bullet, function(index, value) {
 
@@ -93,7 +93,7 @@ function startView() {
         $.each(objs.enemy, function(index, value) {
 
             try {
-                tanksView.drawTank(value.x , value.y , 40, 40, "red", value.direction);
+                tanksView.drawTank(value.x , value.y , 40, 40, "enemy", value.direction);
             }
             catch (e) {
 
@@ -101,39 +101,49 @@ function startView() {
         });
     };
 
-    View.prototype.drawTank = function (x, y, w, h, color, direction){
-        this.contex.fillStyle = color;
+    View.prototype.drawTank = function (x, y, w, h, type, direction){
+        var texture = document.getElementById("tanks-textures");
 
-        this.contex.fillRect(x, y, w, h);
-
-        this.contex.beginPath();
-        this.contex.lineWidth = 2;
-        this.contex.strokeStyle = 'black';
-
-        switch (direction) {
-            case "right": {
-                this.contex.moveTo(x + w, y + h / 2);
-                this.contex.lineTo(x + w / 2, y +  h/ 2);
-                break;
-            }
-            case "left": {
-                this.contex.moveTo(x, y + h / 2);
-                this.contex.lineTo(x + w / 2, y +  h/ 2);
-                break;
-            }
-            case "top": {
-                this.contex.moveTo(x + w / 2, y);
-                this.contex.lineTo(x + w / 2, y +  h/ 2);
-                break;
-            }
-            case "bottom": {
-                this.contex.moveTo(x + w / 2, y + h);
-                this.contex.lineTo(x + w / 2, y +  h/ 2);
-                break;
+        if (type.indexOf("player") !== -1){
+            switch (direction) {
+                case "right": {
+                    this.contex.drawImage(texture, 2, 76, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "bottom": {
+                    this.contex.drawImage(texture, 2 + 14 + 3, 76, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "top": {
+                    this.contex.drawImage(texture, 2 + 14 + 3 + 14 + 3, 76, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "left": {
+                    this.contex.drawImage(texture, 2 + 14 + 3 + 14 + 3 + 14 + 3, 76, 14, 14, x, y, w, h);
+                    break;
+                }
             }
         }
-
-        this.contex.stroke();
+        else{
+            switch (direction) {
+                case "right": {
+                    this.contex.drawImage(texture, 78, 38, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "bottom": {
+                    this.contex.drawImage(texture, 78 + 14 + 2, 38, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "top": {
+                    this.contex.drawImage(texture, 78 + 14 + 2 + 14 + 2, 39, 14, 14, x, y, w, h);
+                    break;
+                }
+                case "left": {
+                    this.contex.drawImage(texture, 78 + 14 + 2 + 14 + 2 + 14 + 2, 38, 14, 14, x, y, w, h);
+                    break;
+                }
+            }
+        }
     };
 
     View.prototype.drawCircle = function (x, y, r, color, direction){
@@ -142,7 +152,7 @@ function startView() {
 
         switch (direction) {
             case "right": {
-                this.contex.arc(x + 5, y + 2,  r, 0, 2*Math.PI, false);
+                this.contex.arc(x + 6, y + 2,  r, 0, 2*Math.PI, false);
                 break;
             }
             case "left": {
@@ -154,7 +164,7 @@ function startView() {
                 break;
             }
             case "bottom": {
-                this.contex.arc(x + 3, y + 9, r, 0, 2*Math.PI, false);
+                this.contex.arc(x + 4, y + 9, r, 0, 2*Math.PI, false);
                 break;
             }
         }
