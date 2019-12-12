@@ -32,6 +32,8 @@ function startModel(size) {
     const ENEMY_SHOT_FREQUENCE = 0.5; // каждые N секунд выстрел
 
     const BULLET_SIZE = 4;
+    const PLAYER_SIZE = 40;
+    const ENEMY_SIZE = 40;
 
     var Model = function () {
         this.objs = {
@@ -50,13 +52,64 @@ function startModel(size) {
                 level: 1,
                 score: 0,
 
-                width: 40,
-                height: 40,
+                width: PLAYER_SIZE,
+                height: PLAYER_SIZE,
 
                 direction: 'top'
             },
             enemy: [],
-            bullet: []
+            bullet: [],
+            enemySpawn:[
+                // top 1
+                {
+                    x: 20,
+                    y: 10,
+                    direction: "bottom"
+                },
+                // top 2
+                {
+                    x: RIGHT_BORDER - 10 - 40,
+                    y: 10,
+                    direction: "left"
+                },
+                // bottom 1
+                {
+                    x: 10,
+                    y: BOTTOM_BORDER - 10 - 40,
+                    direction: "top"
+                },
+                // bottom 2
+                {
+                    x: RIGHT_BORDER - 10 - 40,
+                    y: BOTTOM_BORDER - 10 - 40,
+                    direction: "top"
+                },
+                // top 3
+                {
+                    x: 20 + 50,
+                    y: 10 + 50,
+                    direction: "right"
+                },
+                // top 4
+                {
+                    x: RIGHT_BORDER - 10 - 40 - 50,
+                    y: 10 + 50,
+                    direction: "bottom"
+                },
+                // bottom 3
+                {
+                    x: 10 + 50,
+                    y: BOTTOM_BORDER - 10 - 40 - 50,
+                    direction: "left"
+                },
+                // bottom 4
+                {
+                    x: RIGHT_BORDER - 10 - 40 - 50,
+                    y: BOTTOM_BORDER - 10 - 40 - 50,
+                    direction: "right"
+                },
+            ]
+
         };
     };
 
@@ -326,75 +379,16 @@ function startModel(size) {
         // песенка прошла
         else if (tanksModel.objs.player.time/1000 >= 3.2){
             // проверка на спавн противников
+
             if (tanksModel.objs.enemy.length == 0){
-
-                var enemyTop1= {
-                    x: 20,
-                    y: 10,
-                    hp: ENEMY_HP,
-                    time: 0,
-                    speed: ENEMY_STEP,
-                    startDate: new Date(),
-                    id: "enemy" + uuidv4(),
-                    type: "enemy",
-                    width: 40,
-                    height: 40,
-                    direction: "bottom"
-                };
-
-                var enemyTop2 = {
-                    x: RIGHT_BORDER - 10 - 40,
-                    y: 10,
-                    hp: ENEMY_HP,
-                    time: 0,
-                    speed: ENEMY_STEP,
-                    startDate: new Date(),
-                    id: "enemy" + uuidv4(),
-                    type: "enemy",
-                    width: 40,
-                    height: 40,
-                    direction: "left"
-                };
-
-                var enemyBottom1= {
-                    x: 10,
-                    y:  BOTTOM_BORDER - 10 - 40,
-                    hp: ENEMY_HP,
-                    time: 0,
-                    speed: ENEMY_STEP,
-                    startDate: new Date(),
-                    id: "enemy" + uuidv4(),
-                    type: "enemy",
-                    width: 40,
-                    height: 40,
-                    direction: "right"
-                };
-
-                var enemyBottom2 = {
-                    x: RIGHT_BORDER - 10 - 40,
-                    y:  BOTTOM_BORDER - 10 - 40,
-                    hp: ENEMY_HP,
-                    time: 0,
-                    speed: ENEMY_STEP,
-                    startDate: new Date(),
-                    id: "enemy" + uuidv4(),
-                    type: "enemy",
-                    width: 40,
-                    height: 40,
-                    direction: "top"
-                };
-
-                tanksController.addEnemy(enemyTop1);
-                tanksModel.objs.enemy.push(enemyTop1);
-
-                tanksController.addEnemy(enemyTop2);
-                tanksModel.objs.enemy.push(enemyTop2);
-
-                tanksController.addEnemy(enemyBottom1);
-                tanksModel.objs.enemy.push(enemyBottom1);
-
-                tanksController.addEnemy(enemyBottom2);
-                tanksModel.objs.enemy.push(enemyBottom2);
+                for (var i=0; i< tanksModel.objs.enemySpawn.length;i++){
+                    if (i >= tanksModel.objs.player.level + 3) break; // начинаем с 4 танков
+                    else {
+                        var enemy = tanksModel.createEnemy(tanksModel.objs.enemySpawn[i].x, tanksModel.objs.enemySpawn[i].y, tanksModel.objs.enemySpawn[i].direction);
+                        tanksController.addEnemy(enemy);
+                        tanksModel.objs.enemy.push(enemy);
+                    }
+                }
             }
         }
 
@@ -529,6 +523,22 @@ function startModel(size) {
 
         var index = tanksModel.objs.enemy.indexOf(obj);
         if (index !== -1) tanksModel.objs.enemy.splice(index, 1);
+    };
+
+    Model.prototype.createEnemy = function (x, y, _direction) {
+        return enemy = {
+            x: x,
+            y:  y,
+            hp: ENEMY_HP,
+            time: 0,
+            speed: ENEMY_STEP,
+            startDate: new Date(),
+            id: "enemy" + uuidv4(),
+            type: "enemy",
+            width: ENEMY_SIZE,
+            height: ENEMY_SIZE,
+            direction: _direction
+        };
     };
 
     function checkCollision(obj1, obj2) {
