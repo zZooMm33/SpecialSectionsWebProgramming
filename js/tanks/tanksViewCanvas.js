@@ -55,11 +55,14 @@ function startView() {
         document.querySelector('#levelGame').innerHTML = "Уровень: " + level;
     };
 
-    View.prototype.changeLife = function (life){
-        document.querySelector('#numbLife').innerHTML = "Количество жизней: " + life;
+    View.prototype.changeLife = function (player){
+        document.querySelector('#numbLife').innerHTML = "Количество жизней: " + player.life;
 
-        if (life == 0){
+        // Игрок проиграл
+        if (player.life == 0){
             this.contex.clearRect(0, 0, this.game.width, this.game.height);
+            addScore(player.score);
+            document.querySelector('#getScore').style.display = "inline-block";
             alert("Game Over");
         }
     };

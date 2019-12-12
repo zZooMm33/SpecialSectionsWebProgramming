@@ -38,7 +38,11 @@
                 <p id="numbLife"> Количество жизней: 3</p>
                 <p id="scoreGame">Количество очков: 0</p>
 
-                <div class="center"><button type="button" id="startGame" class="btn btn-success mt-2" onclick="startGame();">Start</button></div>
+                <div class="center">
+                    <button type="button" id="getScore" class="btn btn-primary mt-2" onclick="getScore();">Посмотреть список рекордов</button>
+                    <button type="button" id="startGame" class="btn btn-success mt-2" onclick="startGame();">Start</button>
+                </div>
+
             </div>
         </div>
 
@@ -71,5 +75,6 @@
 <script src="js/tanks/tanksViewCanvas.js"></script>
 <script src="js/tanks/tanksController.js"></script>
 <script src="js/startGame.js"></script>
+<script src="js/localStorage.js"></script>
 </body>
 </html>

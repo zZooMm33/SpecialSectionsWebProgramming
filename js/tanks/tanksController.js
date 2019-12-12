@@ -48,8 +48,8 @@ function startController() {
         this.tanksView.changeScore(score);
     };
 
-    Controller.prototype.changeLife = function(life){
-        this.tanksView.changeLife(life);
+    Controller.prototype.changeLife = function(player){
+        this.tanksView.changeLife(player);
     };
     Controller.prototype.changeLevel = function(level){
         this.tanksView.changeLevel(level);

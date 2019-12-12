@@ -9,6 +9,7 @@ function startGame() {
         return;
     }
 
+    document.querySelector('#getScore').style.display = "none";
     document.querySelector('#startGame').style.display = "none";
     document.querySelector('#game-size').style.display = "none";
 

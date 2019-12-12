@@ -484,7 +484,7 @@ function startModel(size) {
                 // обновляем жизнь
                 tanksModel.objs.player.life--;
                 tanksModel.objs.player.isLife = false;
-                tanksController.changeLife(tanksModel.objs.player.life);
+                tanksController.changeLife(tanksModel.objs.player);
 
                 // удаляем всех врагов и все пули (для рестарта)
                 while(true){
