@@ -1,44 +1,21 @@
-var audioElementShot = null;
-var audioElementStartGameSound = null;
-var audioElementHitEnemyTank = null;
+var AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var trackAudioShot = null;
-var trackAudioStartGameSound = null;
-var trackAudioHitEnemyTank = null;
+var audioContext = new AudioContext();
 
-var panner = null;
-var gainNode = null;
+// get the audio element
+var audioElement = document.querySelector('#startGameSound');
 
-window.onload = function() {
-    //window.AudioContext = window.AudioContext || window.webkitAudioContext;
-    //var audioContext = new AudioContext;
+// pass it into the audio context
+var trackAudio = audioContext.createMediaElementSource(audioElement);
 
-    var AudioContext = window.AudioContext || window.webkitAudioContext;
-    var audioContext = new AudioContext();
+const pannerOptions = { pan: 0 };
+var panner = new StereoPannerNode(audioContext, pannerOptions);
 
-    audioElementShot = document.querySelector('#shot');
-    audioElementStartGameSound = document.querySelector('#startGameSound');
-    audioElementHitEnemyTank = document.querySelector('#hitEnemyTank');
+var gainNode = audioContext.createGain();
 
-    trackAudioShot = audioContext.createMediaElementSource(audioElementShot);
-    trackAudioStartGameSound = audioContext.createMediaElementSource(audioElementStartGameSound);
-    trackAudioHitEnemyTank = audioContext.createMediaElementSource(audioElementHitEnemyTank);
+trackAudio.connect(audioContext.destination);
 
-    const pannerOptions = { pan: 0 };
-    panner = new StereoPannerNode(audioContext, pannerOptions);
-
-    gainNode = audioContext.createGain();
-
-    //trackAudioShot.connect(gainNode).connect(panner).connect(audioContext.destination);
-    trackAudioStartGameSound.connect(audioContext.destination);
-    //trackAudioHitEnemyTank.connect(gainNode).connect(panner).connect(audioContext.destination);
-
-    if (audioContext.state === 'suspended') {
-        audioContext.resume();
-    }
-    audioElementStartGameSound.play();
-
-}
+audioElement.play();
 
 // const pannerControl = document.querySelector('#panner');
 //
@@ -46,14 +23,14 @@ window.onload = function() {
 //     panner.pan.value = this.value;
 // }, false);
 
-const volumeControl = document.querySelector('#gain');
-
-volumeControl.addEventListener('input', function() {
-    gainNode.gain.value = this.value;
-}, false);
-
-function setVolume(value) {
-    audioElementShot.volume = parseFloat(value);
-    audioElementStartGameSound.volume = parseFloat(value);
-    audioElementHitEnemyTank.volume = parseFloat(value);
-}
+// const volumeControl = document.querySelector('#gain');
+//
+// volumeControl.addEventListener('input', function() {
+//     gainNode.gain.value = this.value;
+// }, false);
+//
+// function setVolume(value) {
+//     audioElementShot.volume = parseFloat(value);
+//     audioElementStartGameSound.volume = parseFloat(value);
+//     audioElementHitEnemyTank.volume = parseFloat(value);
+// }
