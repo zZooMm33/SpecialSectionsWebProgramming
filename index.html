@@ -56,9 +56,9 @@
 </div>
 
 
-<audio controls id="shot" src="assets/sounds/tanks/Shot.mp3"></audio>
-<audio controls id="startGameSound" src="assets/sounds/tanks/StartGame.mp3"></audio>
-<audio controls id="hitEnemyTank" src="assets/sounds/tanks/HitAnEnemyTank.mp3" ></audio>
+<audio controls id="shot" src=""></audio>
+<audio controls id="startGameSound" src=""></audio>
+<audio controls id="hitEnemyTank" src="" ></audio>
 
 <img style="display: none" id="tanks-textures" src="assets/img/Tanks.png" alt="Текстура с танками">
 
@@ -66,12 +66,17 @@
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
-<script src="js/tanks/tanksModel.js"></script>
-<script src="js/tanks/tanksViewCanvas.js"></script>
-<script src="js/tanks/tanksController.js"></script>
-<script src="js/startGame.js"></script>
-<script src="js/localStorage.js"></script>
-<script src="js/webAudioAPI.js"></script>
+<script src="js/tanks/audio/initAudio.js"></script>
+<script src="js/tanks/startGame.js"></script>
+<script src="js/tanks/audio/webAudioAPI.js"></script>
+
+<script src="js/tanks/localStorage.js"></script>
+<script src="js/tanks/mvc/tanksModel.js"></script>
+<script src="js/tanks/mvc/tanksViewCanvas.js"></script>
+<script src="js/tanks/mvc/tanksController.js"></script>
+
+
+
 
 </body>
 </html>
