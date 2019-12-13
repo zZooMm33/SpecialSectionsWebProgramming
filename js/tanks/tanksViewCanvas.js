@@ -13,9 +13,9 @@ function startView() {
         this.game.height = this.game.offsetHeight;
 
         //звуки-музыка
-        this.shotSound = document.querySelector('.shot');
-        this.startGameSound = document.querySelector('.startGameSound');
-        this.hitEnemyTankSound = document.querySelector('.hitEnemyTank');
+        this.shotSound = audioElementShot;
+        this.startGameSound = audioElementStartGameSound;
+        this.hitEnemyTankSound = audioElementHitEnemyTank;
 
         // кнопки
         this.onKeyDownEvent = null;

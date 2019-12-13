@@ -1,26 +1,41 @@
-window.AudioContext = window.AudioContext || window.webkitAudioContext;
-var audioContext = new AudioContext;
+var AudioContext = null;
+var audioContext = null;
 
-//var AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioElementShot = null;
+var audioElementStartGameSound = null;
+var audioElementHitEnemyTank = null;
 
-//var audioContext = new AudioContext();
+var trackAudioShot = null;
+var trackAudioStartGameSound = null;
+var trackAudioHitEnemyTank = null;
 
-var audioElementShot = document.querySelector('.audioShot');
-var audioElementStartGameSound = document.querySelector('.startGameSound');
-var audioElementHitEnemyTank = document.querySelector('.itEnemyTank');
+var panner = null;
+var gainNode = null;
 
-var trackAudioShot = audioContext.createMediaElementSource(audioElementShot);
-var trackAudioStartGameSound = audioContext.createMediaElementSource(audioElementStartGameSound);
-var trackAudioHitEnemyTank = audioContext.createMediaElementSource(audioElementHitEnemyTank);
+window.onload = function() {
+    //window.AudioContext = window.AudioContext || window.webkitAudioContext;
+    //var audioContext = new AudioContext;
 
-const pannerOptions = { pan: 0 };
-var panner = new StereoPannerNode(audioContext, pannerOptions);
+    AudioContext = window.AudioContext || window.webkitAudioContext;
+    audioContext = new AudioContext();
 
-var gainNode = audioContext.createGain();
+    audioElementShot = document.querySelector('.shot');
+    audioElementStartGameSound = document.querySelector('.startGameSound');
+    audioElementHitEnemyTank = document.querySelector('.hitEnemyTank');
 
-trackAudioShot.connect(gainNode).connect(panner).connect(audioContext.destination);
-trackAudioStartGameSound.connect(gainNode).connect(panner).connect(audioContext.destination);
-trackAudioHitEnemyTank.connect(gainNode).connect(panner).connect(audioContext.destination);
+    trackAudioShot = audioContext.createMediaElementSource(audioElementShot);
+    trackAudioStartGameSound = audioContext.createMediaElementSource(audioElementStartGameSound);
+    trackAudioHitEnemyTank = audioContext.createMediaElementSource(audioElementHitEnemyTank);
+
+    const pannerOptions = { pan: 0 };
+    panner = new StereoPannerNode(audioContext, pannerOptions);
+
+    gainNode = audioContext.createGain();
+
+    trackAudioShot.connect(gainNode).connect(panner).connect(audioContext.destination);
+    trackAudioStartGameSound.connect(gainNode).connect(panner).connect(audioContext.destination);
+    trackAudioHitEnemyTank.connect(gainNode).connect(panner).connect(audioContext.destination);
+}
 
 const pannerControl = document.querySelector('#panner');
 
@@ -33,7 +48,6 @@ const volumeControl = document.querySelector('#gain');
 volumeControl.addEventListener('input', function() {
     gainNode.gain.value = this.value;
 }, false);
-
 
 function setVolume(value) {
     audioElementShot.volume = parseFloat(value);
