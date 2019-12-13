@@ -1,6 +1,3 @@
-var AudioContext = null;
-var audioContext = null;
-
 var audioElementShot = null;
 var audioElementStartGameSound = null;
 var audioElementHitEnemyTank = null;
@@ -16,8 +13,8 @@ window.onload = function() {
     //window.AudioContext = window.AudioContext || window.webkitAudioContext;
     //var audioContext = new AudioContext;
 
-    AudioContext = window.AudioContext || window.webkitAudioContext;
-    audioContext = new AudioContext();
+    var AudioContext = window.AudioContext || window.webkitAudioContext;
+    var audioContext = new AudioContext();
 
     audioElementShot = document.querySelector('.shot');
     audioElementStartGameSound = document.querySelector('.startGameSound');
@@ -37,11 +34,11 @@ window.onload = function() {
     trackAudioHitEnemyTank.connect(gainNode).connect(panner).connect(audioContext.destination);
 }
 
-const pannerControl = document.querySelector('#panner');
-
-pannerControl.addEventListener('input', function() {
-    panner.pan.value = this.value;
-}, false);
+// const pannerControl = document.querySelector('#panner');
+//
+// pannerControl.addEventListener('input', function() {
+//     panner.pan.value = this.value;
+// }, false);
 
 const volumeControl = document.querySelector('#gain');
 
