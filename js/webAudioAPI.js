@@ -1,6 +1,9 @@
-var AudioContext = window.AudioContext || window.webkitAudioContext;
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
+var audioContext = new AudioContext;
 
-var audioContext = new AudioContext();
+//var AudioContext = window.AudioContext || window.webkitAudioContext;
+
+//var audioContext = new AudioContext();
 
 var audioElementShot = document.querySelector('.audioShot');
 var audioElementStartGameSound = document.querySelector('.startGameSound');
