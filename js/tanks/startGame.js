@@ -24,8 +24,8 @@ function startGame() {
         size = "big";
 
         var gameWindow = document.getElementById("game_window");
-        gameWindow.style.height = 600+"px";
-        gameWindow.style.width = 600+"px";
+        gameWindow.style.height = 550+"px";
+        gameWindow.style.width = 550+"px";
     }
 
     startView();

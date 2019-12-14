@@ -12,8 +12,8 @@ function startModel(size) {
     const TOP_BORDER = 0;
 
     if (size.indexOf("big") !== -1){
-        RIGHT_BORDER = 600;
-        BOTTOM_BORDER = 600;
+        RIGHT_BORDER = 550;
+        BOTTOM_BORDER = 550;
     }
     else{
         RIGHT_BORDER = 400;
@@ -516,14 +516,11 @@ function startModel(size) {
     };
 
     Model.prototype.deleteBullet = function (obj) {
-        //tanksController.deleteObject(obj);
         var index = tanksModel.objs.bullet.indexOf(obj);
         if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
     };
 
     Model.prototype.deleteEnemy = function (obj) {
-        //tanksController.deleteObject(obj);
-
         var index = tanksModel.objs.enemy.indexOf(obj);
         if (index !== -1) tanksModel.objs.enemy.splice(index, 1);
     };

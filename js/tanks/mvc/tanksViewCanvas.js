@@ -35,14 +35,6 @@ function startView() {
         else return false;
     };
 
-    View.prototype.newBullet = function (bullet, className){
-
-    };
-
-    View.prototype.deleteObject = function (object){
-
-    };
-
     View.prototype.changeScore = function (score){
         document.querySelector('#scoreGame').innerHTML = "Количество очков: " + score;
     };

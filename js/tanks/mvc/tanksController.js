@@ -32,14 +32,6 @@ function startController() {
         this.tanksView.render(tanksModel.objs);
     };
 
-    Controller.prototype.addBullet = function(bullet, className){
-        this.tanksView.newBullet(bullet, className);
-    };
-
-    Controller.prototype.deleteObject = function(object){
-        this.tanksView.deleteObject(object);
-    };
-
     Controller.prototype.changeScore = function(score){
         this.tanksView.changeScore(score);
     };
