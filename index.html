@@ -19,21 +19,22 @@
         <div class="col-12">
             <div class="settings">
                 <h1>Настройки</h1>
-                <p>
-                    <b>Звук</b>
-                    <p> <input name="soundsGame" type="radio" value="on" id="soundsGameOn" checked>Вкл</p>
-                    <p> <input name="soundsGame" type="radio" value="off" id="soundsGameOff">Выкл</p>
 
+                <form>
+                    <p><b>Звук</b></p>
+                    <label><input name="soundsGame" type="radio" value="on" id="soundsGameOn" checked>Вкл</label>
+                    <br>
+                    <label><input name="soundsGame" type="radio" value="off" id="soundsGameOff">Выкл</label>
+                    <br>
                     <label>Громкость<input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume(this.value)"></label>
-                </p>
+                </form>
 
-                <div id="game-size">
-                    <p>
-                        <b>Размер игрового поля</b>
-                        <p> <input name="sizeGame" type="radio" value="usual" id="sizeUsual" checked>Обычный</p>
-                        <p> <input name="sizeGame" type="radio" value="big" id="sizeBig">Большой</p>
-                    </p>
-                </div>
+                <form id="game-size">
+                    <p><b>Размер игрового поля</b></p>
+                    <label><input name="sizeGame" type="radio" value="usual" id="sizeUsual" checked>Обычный</label>
+                    <br>
+                    <label><input name="sizeGame" type="radio" value="big" id="sizeBig">Большой</label>
+                </form>
 
                 <h1>Игровая информация</h1>
                 <p id="levelGame">Уровень: 1</p>
@@ -73,9 +74,6 @@
 <script src="js/tanks/mvc/tanksModel.js"></script>
 <script src="js/tanks/mvc/tanksViewCanvas.js"></script>
 <script src="js/tanks/mvc/tanksController.js"></script>
-
-
-
 
 </body>
 </html>
