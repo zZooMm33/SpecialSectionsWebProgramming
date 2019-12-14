@@ -12,6 +12,59 @@ code {
     monospace;
 }
 
-.Center{
+.item{
+  margin-top: 20px;
+}
+
+.center{
   text-align: center;
+}
+
+h1{
+  text-align: center;
+}
+
+img{
+  width: 100%;
+  height: 62%;
+}
+
+input.number{
+  text-align: right;
+}
+
+input.number-table{
+  text-align: right;
+  width: 100%;
+}
+
+input#address, input#phone_number, label{
+  width: 100%;
+}
+
+input{
+  border-color: black;
+}
+
+table{
+  padding: 5px;
+  border: 1px solid black;
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+td{
+  padding: 5px;
+  border: 1px solid black;
+  font-size: 16px;
+}
+th {
+  color: #ffffff;
+  font-weight: bold;
+  background: #28a745;
+  font-size: 18px;
+
+  padding: 5px;
+  border: 1px solid black;
 }
