@@ -14,3 +14,20 @@ var panner = new StereoPannerNode(audioContext, pannerOptions);
 var gainNode = audioContext.createGain();
 
 trackAudio.connect(audioContext.destination);
+
+
+function setVolume(value) {
+    document.getElementById("startGameSound").volume = parseFloat(value);
+}
+
+const pannerControl = document.querySelector('#panner');
+
+pannerControl.addEventListener('input', function() {
+    panner.pan.value = this.value;
+}, false);
+
+const volumeControl = document.querySelector('#gain');
+
+volumeControl.addEventListener('input', function() {
+    gainNode.gain.value = this.value;
+}, false);
