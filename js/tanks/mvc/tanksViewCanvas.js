@@ -13,9 +13,9 @@ function startView() {
         this.game.height = this.game.offsetHeight;
 
         //звуки-музыка
-        this.shotSound = document.querySelector('#shot');
-        this.startGameSound = document.querySelector('#startGameSound');
-        this.hitEnemyTankSound = document.querySelector('#hitEnemyTank');
+        this.shotSound = document.querySelector('#shot').src;
+        this.startGameSound = document.querySelector('#startGameSound').src;
+        this.hitEnemyTankSound = document.querySelector('#hitEnemyTank').src;
 
         // кнопки
         this.onKeyDownEvent = null;
@@ -36,10 +36,6 @@ function startView() {
     };
 
     View.prototype.newBullet = function (bullet, className){
-
-    };
-
-    View.prototype.newEnemy = function (enemy){
 
     };
 

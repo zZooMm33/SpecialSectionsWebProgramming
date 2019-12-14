@@ -1,33 +1,39 @@
-var AudioContext = window.AudioContext || window.webkitAudioContext;
+window.AudioContext = window.AudioContext || window.webkitAudioContext;
 
-var audioContext = new AudioContext();
+var audioCtx = new AudioContext();
+var gainNode = null;
 
-// get the audio element
-var audioElement = document.querySelector('#startGameSound');
-
-// pass it into the audio context
-var trackAudio = audioContext.createMediaElementSource(audioElement);
-
-const pannerOptions = { pan: 0 };
-var panner = new StereoPannerNode(audioContext, pannerOptions);
-
-var gainNode = audioContext.createGain();
-
-trackAudio.connect(audioContext.destination);
+function play( snd ) {
 
 
-function setVolume(value) {
-    document.getElementById("startGameSound").volume = parseFloat(value);
+    var request = new XMLHttpRequest();
+    request.open( "GET", snd, true );
+    request.responseType = "arraybuffer";
+    request.onload = function () {
+        var audioData = request.response;
+
+        audioCtx.decodeAudioData(
+            audioData,
+            function ( buffer ) {
+                var smp = audioCtx.createBufferSource();
+                smp.buffer = buffer;
+                //создание объекта GainNode и его привязка
+                if (gainNode == null) {gainNode = audioCtx.createGain ? audioCtx.createGain() : audioCtx.createGainNode();}
+                smp.connect( gainNode );
+                gainNode.connect( audioCtx.destination );
+                gainNode.gain.value = document.getElementById("volume").value;
+                smp.start( 0 );
+            },
+            function ( e ) {
+                alert( "Error with decoding audio data" + e.err );
+            }
+        );
+    };
+    request.send();
 }
 
-const pannerControl = document.querySelector('#panner');
-
-pannerControl.addEventListener('input', function() {
-    panner.pan.value = this.value;
-}, false);
-
-const volumeControl = document.querySelector('#gain');
-
-volumeControl.addEventListener('input', function() {
-    gainNode.gain.value = this.value;
-}, false);
+function setVolume(value) {
+    if (gainNode != null){
+        gainNode.gain.value = parseFloat(value);
+    }
+}

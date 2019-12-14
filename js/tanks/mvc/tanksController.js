@@ -32,10 +32,6 @@ function startController() {
         this.tanksView.render(tanksModel.objs);
     };
 
-    Controller.prototype.addEnemy = function(enemy){
-        this.tanksView.newEnemy(enemy);
-    };
-
     Controller.prototype.addBullet = function(bullet, className){
         this.tanksView.newBullet(bullet, className);
     };

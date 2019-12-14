@@ -35,6 +35,10 @@ function startModel(size) {
     const PLAYER_SIZE = 40;
     const ENEMY_SIZE = 40;
 
+    const SCORE_KILL_ENEMY = 100;
+    const SCORE_SHOT = -2;
+    const SCORE_KILL_PLAYER = -100;
+
     var Model = function () {
         this.objs = {
             isGameOver: false,
@@ -197,10 +201,10 @@ function startModel(size) {
                 direction: tanksModel.objs.player.direction
             };
 
-            if (sound) shot.play();
+            if (sound) play(shot);
 
             tanksModel.objs.bullet.push(bullet);
-            tanksController.addBullet(bullet, bullet.name);
+            //tanksController.addBullet(bullet, bullet.name);
 
 
             switch (tanksModel.objs.player.direction) {
@@ -222,7 +226,7 @@ function startModel(size) {
                 }
             }
 
-            tanksModel.objs.player.score--;
+            tanksModel.objs.player.score += SCORE_SHOT;
             tanksController.changeScore(tanksModel.objs.player.score);
         }
     };
@@ -309,7 +313,7 @@ function startModel(size) {
                     };
 
                     tanksModel.objs.bullet.push(bullet);
-                    tanksController.addBullet(bullet, bullet.name);
+                    //tanksController.addBullet(bullet, bullet.name);
 
 
                     switch (value.direction) {
@@ -350,7 +354,7 @@ function startModel(size) {
 
         if (tanksModel.objs.player.time == 0){
             var sound = tanksController.startSound();
-            if (sound != null) sound.play();
+            if (sound != null) play(sound);
         }
         else if (tanksModel.objs.player.time/1000 >= 4 || !tanksModel.objs.player.isLife){
             // Игра началась + танков нет = игрок их убил = некст лвл или игрок умер
@@ -385,7 +389,6 @@ function startModel(size) {
                     if (i >= tanksModel.objs.player.level + 3) break; // начинаем с 4 танков
                     else {
                         var enemy = tanksModel.createEnemy(tanksModel.objs.enemySpawn[i].x, tanksModel.objs.enemySpawn[i].y, tanksModel.objs.enemySpawn[i].direction);
-                        tanksController.addEnemy(enemy);
                         tanksModel.objs.enemy.push(enemy);
                     }
                 }
@@ -459,14 +462,14 @@ function startModel(size) {
                     // -1 хп у врага
                     tanksModel.deleteBullet(value);
                     var sound = tanksController.hitEnemyTankSound();
-                    if (sound != null) sound.play();
+                    if (sound != null) play(sound);
 
 
                     enemyValue.hp--;
                     if (enemyValue.hp == 0) {
                         //удаляем + очки
 
-                        tanksModel.objs.player.score += 50;
+                        tanksModel.objs.player.score += SCORE_KILL_ENEMY;
                         tanksController.changeScore(tanksModel.objs.player.score);
 
                         tanksModel.deleteEnemy(enemyValue);
@@ -478,7 +481,7 @@ function startModel(size) {
             //Пуля врага
             if(tanksModel.objs.player.isLife && checkCollision(value, tanksModel.objs.player)){
                 // обновляем score
-                tanksModel.objs.player.score -= 100;
+                tanksModel.objs.player.score += SCORE_KILL_PLAYER;
                 tanksController.changeScore(tanksModel.objs.player.score);
 
                 // обновляем жизнь
@@ -513,13 +516,13 @@ function startModel(size) {
     };
 
     Model.prototype.deleteBullet = function (obj) {
-        tanksController.deleteObject(obj);
+        //tanksController.deleteObject(obj);
         var index = tanksModel.objs.bullet.indexOf(obj);
         if (index !== -1) tanksModel.objs.bullet.splice(index, 1);
     };
 
     Model.prototype.deleteEnemy = function (obj) {
-        tanksController.deleteObject(obj);
+        //tanksController.deleteObject(obj);
 
         var index = tanksModel.objs.enemy.indexOf(obj);
         if (index !== -1) tanksModel.objs.enemy.splice(index, 1);

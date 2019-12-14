@@ -24,8 +24,7 @@
                     <p> <input name="soundsGame" type="radio" value="on" id="soundsGameOn" checked>Вкл</p>
                     <p> <input name="soundsGame" type="radio" value="off" id="soundsGameOff">Выкл</p>
 
-                    <label>Громкость<input min="0" max="1" step="0.01" type="range" onchange="setVolume(this.value)"></label>
-                    <label>Усиление звука<input id="gain" min="0" max="1" step="0.01" type="range" onchange=""></label>
+                    <label>Громкость<input id="volume" min="0" max="1" step="0.01" type="range" onchange="setVolume(this.value)"></label>
                 </p>
 
                 <div id="game-size">
@@ -56,9 +55,9 @@
 </div>
 
 
-<audio id="shot" src="blob:http://localhost:63342/5c2e9b0b-1c0c-40d0-bb1f-e4fd34c31e3c"></audio>
-<audio id="startGameSound" src="blob:http://localhost:63342/e263dd8f-231b-4b7b-83a5-2889cb629fc7"></audio>
-<audio id="hitEnemyTank" src="blob:http://localhost:63342/2b366318-f2a2-4742-830a-58b7b583d622"></audio>
+<audio id="shot" src="assets/sounds/tanks/Shot.mp3"></audio>
+<audio id="startGameSound" src="assets/sounds/tanks/StartGame.mp3"></audio>
+<audio id="hitEnemyTank" src="assets/sounds/tanks/HitAnEnemyTank.mp3"></audio>
 
 <img style="display: none" id="tanks-textures" src="assets/img/Tanks.png" alt="Текстура с танками">
 
