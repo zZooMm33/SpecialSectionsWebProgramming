@@ -1,4 +1,8 @@
+// Имя переменной в local storage
 const SCORE = "score";
+
+// Макс количество рекордов
+const MAX_SCORE = 10;
 
 function getScore() {
     var score = localStorage.getItem(SCORE);
@@ -24,7 +28,23 @@ function addScore(newScore) {
     else {
         score = score.split(",");
         score.push(newScore);
-        score.sort();
+
+        // Сортируем
+        score.sort(function(a, b) {
+            if (parseInt(a) < parseInt(b)) {
+                return 1;
+            }
+            if (parseInt(a) > parseInt(b)) {
+                return -1;
+            }
+            return 0;
+        });
+
+        // удаляем лишние
+        for (;score.length > MAX_SCORE;){
+            score = remove(score, MAX_SCORE);
+        }
+
         localStorage.removeItem(SCORE);
         localStorage.setItem(SCORE, score);
     }
