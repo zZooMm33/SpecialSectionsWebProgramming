@@ -15,6 +15,7 @@ export default function Basket() {
                     <th scope="col" id="col-delete"></th>
                 </tr>
                 </thead>
+
                 <tbody>
 
                 </tbody>
